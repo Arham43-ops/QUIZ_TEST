@@ -7,49 +7,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:       #07090f;
-  --surface:  #0f1117;
-  --card:     #141720;
-  --raised:   #1a1e2e;
-  --border:   rgba(255,255,255,0.07);
-  --border2:  rgba(255,255,255,0.12);
-  --blue:     #4f8ef7;
-  --blue2:    #7eb3ff;
-  --indigo:   #6366f1;
-  --cyan:     #22d3ee;
-  --green:    #34d399;
-  --red:      #f87171;
-  --yellow:   #fbbf24;
-  --txt:      #e8eaf2;
-  --txt2:     #9499b0;
-  --txt3:     #5a607a;
-  --nav-w:    256px;
-  --top-h:    60px;
+  --bg:#07090f;--surface:#0f1117;--card:#141720;--raised:#1a1e2e;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --blue:#4f8ef7;--blue2:#7eb3ff;--indigo:#6366f1;--cyan:#22d3ee;
+  --green:#34d399;--red:#f87171;--yellow:#fbbf24;--purple:#a78bfa;
+  --txt:#e8eaf2;--txt2:#9499b0;--txt3:#5a607a;
+  --nav-w:256px;--top-h:60px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{height:100%}
 body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-height:100%;display:flex;flex-direction:column;overflow:hidden}
-
-/* ═══ LAYOUT ═══ */
 #app{display:flex;height:100vh;overflow:hidden}
 
-/* ═══ SIDEBAR ═══ */
-#sidebar{
-  width:var(--nav-w);min-width:var(--nav-w);
-  background:var(--surface);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  height:100vh;overflow:hidden;
-  transition:transform .3s cubic-bezier(.4,0,.2,1);
-  z-index:200;
-}
-
+/* SIDEBAR */
+#sidebar{width:var(--nav-w);min-width:var(--nav-w);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;overflow:hidden;transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:200}
 .sb-head{padding:22px 20px 18px;border-bottom:1px solid var(--border)}
 .sb-brand{display:flex;align-items:center;gap:10px}
 .sb-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--indigo));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
 .sb-name{font-size:1rem;font-weight:800;letter-spacing:-.01em;line-height:1.1}
 .sb-sub{font-size:.65rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;margin-top:2px}
-
 .sb-nav{padding:14px 12px 0;flex-shrink:0}
 .sb-sec{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.18em;color:var(--txt3);padding:0 8px;margin-bottom:8px;margin-top:4px}
 .sb-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;cursor:pointer;transition:all .16s;color:var(--txt2);font-size:.85rem;font-weight:500;border:1px solid transparent;margin-bottom:2px;user-select:none;position:relative;text-decoration:none}
@@ -58,9 +34,8 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .sb-item.active::before{content:'';position:absolute;left:-1px;top:22%;bottom:22%;width:3px;background:var(--blue);border-radius:0 3px 3px 0}
 .sb-ico{font-size:.9rem;width:18px;text-align:center;flex-shrink:0}
 .sb-badge{margin-left:auto;background:rgba(79,142,247,.15);color:var(--blue);font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:2px 7px;border-radius:99px;border:1px solid rgba(79,142,247,.2)}
-
+.sb-badge.new{background:rgba(251,191,36,.15);color:var(--yellow);border-color:rgba(251,191,36,.25)}
 .sb-div{height:1px;background:var(--border);margin:10px 12px}
-
 .sb-units{flex:1;overflow-y:auto;padding:0 12px 12px}
 .sb-units::-webkit-scrollbar{width:3px}
 .sb-units::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
@@ -69,7 +44,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .unit-btn.active{background:rgba(34,211,238,.08);color:var(--cyan);border-color:rgba(34,211,238,.18)}
 .udot{width:7px;height:7px;border-radius:50%;background:var(--txt3);flex-shrink:0;transition:background .2s}
 .unit-btn.active .udot{background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
-
 .sb-foot{padding:14px;border-top:1px solid var(--border);flex-shrink:0}
 .ses-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .ses-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:var(--txt3);margin-bottom:8px}
@@ -78,38 +52,28 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .ses-row span:last-child{font-family:'JetBrains Mono',monospace;font-size:.76rem}
 .sg{color:var(--green)}.sr{color:var(--red)}.sb_{color:var(--blue)}
 
-/* ═══ MAIN ═══ */
+/* MAIN */
 #main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;min-width:0}
-
-/* ═══ TOPBAR ═══ */
-#topbar{
-  height:var(--top-h);min-height:var(--top-h);
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;gap:12px;flex-shrink:0;z-index:100;
-}
+#topbar{height:var(--top-h);min-height:var(--top-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;gap:12px;flex-shrink:0;z-index:100}
 .tb-left{display:flex;align-items:center;gap:12px}
 #hamburger{display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;width:36px;height:36px;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:4px;flex-shrink:0}
 #hamburger span{width:18px;height:2px;background:var(--blue);border-radius:2px}
 .tb-title{font-size:1rem;font-weight:700;letter-spacing:.01em}
 .tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .seg{display:flex;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden}
-.seg-btn{padding:7px 14px;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--txt2);border:none;background:none;font-family:'Outfit',sans-serif;transition:all .15s;white-space:nowrap}
+.seg-btn{padding:7px 12px;font-size:.75rem;font-weight:600;cursor:pointer;color:var(--txt2);border:none;background:none;font-family:'Outfit',sans-serif;transition:all .15s;white-space:nowrap}
 .seg-btn.on{background:var(--blue);color:#fff}
+.seg-btn.on.ab{background:var(--yellow);color:#0e0e0e}
 .go-btn{padding:8px 16px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .18s;white-space:nowrap}
 .go-btn:hover{background:var(--blue2);transform:translateY(-1px)}
-
-/* ═══ CONTENT AREA ═══ */
 #content{flex:1;overflow-y:auto;min-height:0}
 #content::-webkit-scrollbar{width:5px}
 #content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
-
 .screen{padding:24px;display:none;animation:fadeUp .28s ease}
 .screen.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ═══ HOME ═══ */
+/* HOME */
 .hero{background:linear-gradient(130deg,rgba(79,142,247,.1),rgba(99,102,241,.06));border:1px solid var(--border2);border-radius:16px;padding:32px;margin-bottom:20px;position:relative;overflow:hidden}
 .hero::after{content:'170';position:absolute;right:-12px;bottom:-28px;font-size:9rem;font-weight:800;color:rgba(79,142,247,.05);line-height:1;pointer-events:none;font-family:'Outfit',sans-serif}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(79,142,247,.12);border:1px solid rgba(79,142,247,.25);border-radius:99px;font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--blue);margin-bottom:14px;letter-spacing:.06em}
@@ -119,24 +83,25 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .hero-nums{display:flex;gap:24px;flex-wrap:wrap}
 .hn-val{font-size:1.8rem;font-weight:800;color:var(--blue);line-height:1}
 .hn-lbl{font-size:.65rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
-
-.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
 .hcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
 .hcard::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s}
 .hcard.q::before{background:radial-gradient(120% 120% at 0 0,rgba(79,142,247,.1),transparent)}
 .hcard.f::before{background:radial-gradient(120% 120% at 0 0,rgba(34,211,238,.08),transparent)}
+.hcard.ab::before{background:radial-gradient(120% 120% at 0 0,rgba(251,191,36,.1),transparent)}
 .hcard:hover{border-color:rgba(79,142,247,.3);transform:translateY(-2px);box-shadow:0 10px 36px rgba(0,0,0,.4)}
 .hcard:hover::before{opacity:1}
 .hcard-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:12px}
 .hcard.q .hcard-icon{background:rgba(79,142,247,.12);border:1px solid rgba(79,142,247,.2)}
 .hcard.f .hcard-icon{background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2)}
+.hcard.ab .hcard-icon{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2)}
 .hcard h3{font-size:.95rem;font-weight:700;margin-bottom:5px}
 .hcard p{font-size:.78rem;color:var(--txt2);line-height:1.5;margin-bottom:14px}
 .hcard-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:7px;font-size:.76rem;font-weight:600;cursor:pointer;border:none;font-family:'Outfit',sans-serif;transition:opacity .15s}
 .hcard.q .hcard-btn{background:var(--blue);color:#fff}
 .hcard.f .hcard-btn{background:var(--cyan);color:#0e0e0e}
+.hcard.ab .hcard-btn{background:var(--yellow);color:#0e0e0e}
 .hcard-btn:hover{opacity:.85}
-
 .unit-list-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
 .ul-head{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:var(--txt3);margin-bottom:14px}
 .unit-list{display:grid;gap:7px}
@@ -148,11 +113,9 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .urow-sub{font-size:.72rem;color:var(--txt2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .urow-cnt{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--txt3);background:var(--surface);padding:3px 9px;border-radius:99px;border:1px solid var(--border);flex-shrink:0}
 
-/* ═══ QUIZ ═══ */
+/* QUIZ */
 .qz-wrap{display:flex;flex-direction:column;height:100%;min-height:0}
-
 .qz-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;flex-shrink:0}
-.qz-meta{}
 .qz-lbl{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--txt3);margin-bottom:3px}
 .qz-prog{display:flex;align-items:center;gap:8px}
 .qz-num{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--blue);font-weight:700}
@@ -162,17 +125,13 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .ch{padding:4px 11px;border-radius:99px;font-family:'JetBrains Mono',monospace;font-size:.68rem;border:1px solid;display:flex;align-items:center;gap:4px}
 .ch.c{background:rgba(52,211,153,.08);color:var(--green);border-color:rgba(52,211,153,.2)}
 .ch.w{background:rgba(248,113,113,.08);color:var(--red);border-color:rgba(248,113,113,.2)}
-
-/* question card - scrollable area */
 .qz-body{flex:1;overflow-y:auto;min-height:0;padding-bottom:8px}
 .qz-body::-webkit-scrollbar{width:0}
-
 .q-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 22px 20px;margin-bottom:12px}
 .q-ghost{font-family:'Outfit',sans-serif;font-size:5rem;font-weight:800;color:rgba(79,142,247,.06);position:absolute;right:16px;top:8px;line-height:1;user-select:none;pointer-events:none}
 .q-inner{position:relative}
 .q-tag{display:inline-flex;align-items:center;padding:3px 9px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);border-radius:99px;font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--indigo);margin-bottom:12px}
 .q-txt{font-size:clamp(.9rem,2.2vw,1.05rem);font-weight:500;line-height:1.65;color:var(--txt);max-width:88%}
-
 .opts{display:grid;gap:8px;margin-bottom:10px}
 .opt{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:11px;cursor:pointer;transition:border-color .14s,background .14s,transform .12s;text-align:left;width:100%;font-family:'Outfit',sans-serif;color:var(--txt);animation:slideIn .22s ease both}
 .opt:nth-child(1){animation-delay:.03s}.opt:nth-child(2){animation-delay:.06s}.opt:nth-child(3){animation-delay:.09s}.opt:nth-child(4){animation-delay:.12s}
@@ -187,20 +146,11 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .opt.wrong{background:rgba(248,113,113,.07);border-color:var(--red)}
 .opt.wrong .opt-l{background:var(--red);border-color:var(--red);color:#fff}
 .opt.wrong .opt-t{color:var(--red)}
-
 .fb{display:none;padding:11px 14px;border-radius:9px;font-size:.82rem;line-height:1.5;margin-bottom:10px;animation:slideIn .18s ease}
 .fb.show{display:block}
 .fb.c{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.22);color:var(--green)}
 .fb.w{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.22);color:var(--red)}
-
-/* ═══ STICKY BOTTOM NAV ═══ */
-.qz-foot{
-  flex-shrink:0;
-  background:var(--surface);
-  border-top:1px solid var(--border);
-  padding:12px 16px;
-  display:flex;align-items:center;gap:10px;
-}
+.qz-foot{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px}
 .nav-btn{padding:10px 18px;border-radius:9px;font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;cursor:pointer;transition:all .16s;border:1.5px solid var(--border);background:var(--card);color:var(--txt2);flex-shrink:0}
 .nav-btn:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
 .nav-btn:disabled{opacity:.3;cursor:not-allowed}
@@ -212,12 +162,10 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .dot.dc{background:var(--green)}
 .dot.dw{background:var(--red)}
 
-/* ═══ FLASHCARD ═══ */
+/* FLASHCARD */
 .fc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;flex-shrink:0}
 .fc-ctr{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--txt2)}
 .fc-ctr strong{color:var(--blue)}
-.fc-wrap{flex:1;overflow-y:auto;min-height:0;padding-bottom:4px}
-.fc-wrap::-webkit-scrollbar{width:0}
 .flashcard{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:48px 36px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;transition:box-shadow .22s,transform .22s,border-color .25s;position:relative;overflow:hidden;margin-bottom:14px}
 .flashcard::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;background:radial-gradient(circle,rgba(79,142,247,.07),transparent 70%);pointer-events:none}
 .flashcard:hover{box-shadow:0 16px 50px rgba(0,0,0,.4);transform:translateY(-2px)}
@@ -234,10 +182,87 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .fc-opt.ia{background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.28);color:var(--green);font-weight:600}
 .fc-lt{color:var(--txt3);margin-right:3px;font-family:'JetBrains Mono',monospace;font-size:.68rem}
 .fc-foot{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px}
-.fc-screen{display:flex;flex-direction:column;height:100%;padding:0}
-.fc-screen .screen-inner{padding:24px;flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 
-/* ═══ RESULT ═══ */
+/* ══════════════════════════════════════════
+   ABBREV BLITZ SCREEN
+══════════════════════════════════════════ */
+#screen-abbrev{padding:0;height:100%}
+.ab-wrap{display:flex;flex-direction:column;height:100%}
+.ab-top-pad{padding:20px 24px 0;flex-shrink:0}
+.ab-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.ab-title-row{display:flex;align-items:center;gap:10px}
+.ab-badge{padding:4px 12px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.25);border-radius:99px;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--yellow);text-transform:uppercase;letter-spacing:.1em}
+.ab-meta{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--txt2)}
+.ab-meta strong{color:var(--yellow)}
+.ab-body{flex:1;overflow-y:auto;padding:0 24px 8px;min-height:0}
+.ab-body::-webkit-scrollbar{width:0}
+
+/* Mode selector inside abbrev */
+.ab-mode-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.ab-mode-btn{padding:7px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--txt2);transition:all .15s}
+.ab-mode-btn.on{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.3);color:var(--yellow)}
+
+/* ── TYPE-IT ── */
+.ti-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 26px;margin-bottom:12px;position:relative}
+.ti-abbrev{font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:700;color:var(--yellow);letter-spacing:.08em;margin-bottom:6px;line-height:1}
+.ti-unit{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--txt3);margin-bottom:18px}
+.ti-input-row{display:flex;gap:10px;align-items:center}
+.ti-input{flex:1;padding:12px 16px;background:var(--raised);border:1.5px solid var(--border);border-radius:10px;color:var(--txt);font-family:'Outfit',sans-serif;font-size:.95rem;outline:none;transition:border-color .15s}
+.ti-input:focus{border-color:rgba(251,191,36,.4)}
+.ti-input.ok{border-color:var(--green);background:rgba(52,211,153,.06)}
+.ti-input.bad{border-color:var(--red);background:rgba(248,113,113,.06)}
+.ti-check{padding:12px 20px;background:var(--yellow);color:#0e0e0e;border:none;border-radius:10px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;flex-shrink:0;transition:opacity .15s}
+.ti-check:hover{opacity:.85}
+.ti-reveal{padding:7px 14px;background:var(--raised);color:var(--txt2);border:1px solid var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:.78rem;cursor:pointer;flex-shrink:0;transition:all .15s}
+.ti-reveal:hover{color:var(--txt)}
+.ti-fb{margin-top:12px;padding:10px 14px;border-radius:9px;font-size:.84rem;display:none;animation:slideIn .18s ease}
+.ti-fb.show{display:block}
+.ti-fb.ok{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--green)}
+.ti-fb.bad{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);color:var(--red)}
+.ti-fb.rev{background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);color:var(--blue2)}
+.ti-hint{margin-top:8px;font-size:.76rem;color:var(--txt3)}
+.ti-hint span{color:var(--txt2)}
+
+/* ── MATCH PAIRS ── */
+.mp-intro{text-align:center;padding:40px 20px}
+.mp-intro h3{font-size:1.2rem;font-weight:700;margin-bottom:8px}
+.mp-intro p{color:var(--txt2);font-size:.85rem;margin-bottom:20px}
+.mp-start-btn{padding:12px 28px;background:var(--yellow);color:#0e0e0e;border:none;border-radius:10px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer}
+.mp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.mp-col-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.14em;color:var(--txt3);margin-bottom:8px}
+.mp-item{padding:11px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;font-size:.84rem;font-weight:500;transition:all .15s;user-select:none}
+.mp-item:hover{border-color:rgba(251,191,36,.35);color:var(--yellow)}
+.mp-item.sel{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.45);color:var(--yellow)}
+.mp-item.matched{background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.3);color:var(--green);cursor:default;pointer-events:none}
+.mp-item.wrong-flash{animation:wrongFlash .4s ease}
+@keyframes wrongFlash{0%,100%{background:var(--card)}50%{background:rgba(248,113,113,.15);border-color:rgba(248,113,113,.4)}}
+.mp-item.abbrev-col{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:700;color:var(--yellow);letter-spacing:.05em}
+.mp-item.abbrev-col.sel{color:var(--yellow)}
+.mp-item.abbrev-col.matched{color:var(--green)}
+.mp-score-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:10px}
+.mp-s-lbl{font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--txt3)}
+.mp-s-val{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700}
+
+/* ── ABBREV CHEATSHEET ── */
+.cs-search{width:100%;padding:10px 16px;background:var(--raised);border:1.5px solid var(--border);border-radius:10px;color:var(--txt);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;margin-bottom:14px;transition:border-color .15s}
+.cs-search:focus{border-color:rgba(251,191,36,.35)}
+.cs-table{width:100%;border-collapse:collapse}
+.cs-table thead th{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--txt3);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.cs-table tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .12s}
+.cs-table tbody tr:hover{background:rgba(255,255,255,.03)}
+.cs-table td{padding:9px 12px;font-size:.82rem;vertical-align:top}
+.cs-abbrev{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--yellow);font-size:.88rem}
+.cs-full{color:var(--txt)}
+.cs-unit-chip{padding:2px 8px;border-radius:99px;font-family:'JetBrains Mono',monospace;font-size:.6rem;border:1px solid}
+.cs-unit-chip.Cyberspace{background:rgba(79,142,247,.1);color:var(--blue);border-color:rgba(79,142,247,.2)}
+.cs-unit-chip.Security{background:rgba(248,113,113,.1);color:var(--red);border-color:rgba(248,113,113,.2)}
+.cs-unit-chip.Ecommerce{background:rgba(52,211,153,.1);color:var(--green);border-color:rgba(52,211,153,.2)}
+.cs-unit-chip.IoT{background:rgba(251,191,36,.1);color:var(--yellow);border-color:rgba(251,191,36,.2)}
+.cs-unit-chip.Cloud{background:rgba(167,139,250,.1);color:var(--purple);border-color:rgba(167,139,250,.2)}
+
+.ab-foot{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px}
+
+/* RESULT */
 .res-wrap{max-width:540px;margin:0 auto}
 .res-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:40px 32px;text-align:center;margin-bottom:16px}
 .res-ring{width:120px;height:120px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative}
@@ -251,11 +276,8 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 .rs-l{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--txt3)}
 .rs.c .rs-v{color:var(--green)}.rs.w .rs-v{color:var(--red)}.rs.t .rs-v{color:var(--blue)}
 .res-acts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-
-/* ═══ OVERLAY ═══ */
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:190;backdrop-filter:blur(2px)}
 
-/* ═══ RESPONSIVE ═══ */
 @media(max-width:720px){
   #sidebar{position:fixed;top:0;left:0;height:100vh;transform:translateX(-100%)}
   #sidebar.open{transform:translateX(0)}
@@ -272,12 +294,13 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
   .res-card{padding:28px 20px}
   .res-stats{grid-template-columns:1fr 1fr}
   .rs.t{grid-column:span 2}
-  .seg-btn{padding:7px 10px;font-size:.72rem}
-  .go-btn{padding:7px 12px}
+  .seg-btn{padding:7px 8px;font-size:.7rem}
+  .go-btn{padding:7px 10px}
+  .mp-grid{grid-template-columns:1fr}
+  .ab-body{padding:0 16px 8px}
+  .ab-top-pad{padding:16px 16px 0}
 }
-@media(max-width:400px){
-  .home-grid{grid-template-columns:1fr}
-}
+@media(max-width:400px){.home-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -290,55 +313,29 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
       <div class="sb-icon">📡</div>
       <div>
         <div class="sb-name">E-Trends</div>
-        <div class="sb-sub">Exam Prep · 100 Qs</div>
+        <div class="sb-sub">Exam Prep · 170 Qs</div>
       </div>
     </div>
   </div>
-
   <div class="sb-nav">
     <div class="sb-sec">Pages</div>
-    <div class="sb-item active" data-screen="home" onclick="navTo('home',this)">
-      <span class="sb-ico">⌂</span> Home
-    </div>
-    <div class="sb-item" data-screen="quiz" onclick="startMode('quiz')">
-      <span class="sb-ico">🧠</span> Quiz Mode
-      <span class="sb-badge">MCQ</span>
-    </div>
-    <div class="sb-item" data-screen="flash" onclick="startMode('flash')">
-      <span class="sb-ico">🃏</span> Flashcards
-    </div>
-    <div class="sb-item" id="res-nav-item" data-screen="result" onclick="navTo('result',this)" style="display:none">
-      <span class="sb-ico">📊</span> Last Result
-    </div>
+    <div class="sb-item active" data-screen="home" onclick="navTo('home',this)"><span class="sb-ico">⌂</span> Home</div>
+    <div class="sb-item" data-screen="quiz" onclick="startMode('quiz')"><span class="sb-ico">🧠</span> Quiz Mode<span class="sb-badge">MCQ</span></div>
+    <div class="sb-item" data-screen="flash" onclick="startMode('flash')"><span class="sb-ico">🃏</span> Flashcards</div>
+    <div class="sb-item" data-screen="abbrev" onclick="startMode('abbrev')"><span class="sb-ico">⚡</span> Abbrev Blitz<span class="sb-badge new">NEW</span></div>
+    <div class="sb-item" id="res-nav-item" data-screen="result" onclick="navTo('result',this)" style="display:none"><span class="sb-ico">📊</span> Last Result</div>
   </div>
-
   <div class="sb-div"></div>
   <div class="sb-nav" style="padding-bottom:0"><div class="sb-sec">Filter Unit</div></div>
-
   <div class="sb-units">
-    <button class="unit-btn active" data-unit="all" onclick="pickUnit(this)">
-      <span class="udot"></span> All Topics
-    </button>
-    <button class="unit-btn" data-unit="Cyberspace" onclick="pickUnit(this)">
-      <span class="udot"></span> Cyberspace &amp; Web
-    </button>
-    <button class="unit-btn" data-unit="Security" onclick="pickUnit(this)">
-      <span class="udot"></span> Cybersecurity
-    </button>
-    <button class="unit-btn" data-unit="Ecommerce" onclick="pickUnit(this)">
-      <span class="udot"></span> E-Commerce &amp; Digital
-    </button>
-    <button class="unit-btn" data-unit="IoT" onclick="pickUnit(this)">
-      <span class="udot"></span> Internet of Things
-    </button>
-    <button class="unit-btn" data-unit="Cloud" onclick="pickUnit(this)">
-      <span class="udot"></span> Cloud Computing
-    </button>
-    <button class="unit-btn" data-unit="TrueFalse" onclick="pickUnit(this)">
-      <span class="udot"></span> True / False
-    </button>
+    <button class="unit-btn active" data-unit="all" onclick="pickUnit(this)"><span class="udot"></span> All Topics</button>
+    <button class="unit-btn" data-unit="Cyberspace" onclick="pickUnit(this)"><span class="udot"></span> Cyberspace &amp; Web</button>
+    <button class="unit-btn" data-unit="Security" onclick="pickUnit(this)"><span class="udot"></span> Cybersecurity</button>
+    <button class="unit-btn" data-unit="Ecommerce" onclick="pickUnit(this)"><span class="udot"></span> E-Commerce &amp; Digital</button>
+    <button class="unit-btn" data-unit="IoT" onclick="pickUnit(this)"><span class="udot"></span> Internet of Things</button>
+    <button class="unit-btn" data-unit="Cloud" onclick="pickUnit(this)"><span class="udot"></span> Cloud Computing</button>
+    <button class="unit-btn" data-unit="TrueFalse" onclick="pickUnit(this)"><span class="udot"></span> True / False</button>
   </div>
-
   <div class="sb-foot">
     <div class="ses-box">
       <div class="ses-lbl">Session Stats</div>
@@ -351,42 +348,37 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
 
 <div id="overlay" onclick="closeSidebar()"></div>
 
-<!-- MAIN -->
 <div id="main">
-  <!-- TOPBAR -->
   <div id="topbar">
     <div class="tb-left">
-      <div id="hamburger" onclick="toggleSidebar()">
-        <span></span><span></span><span></span>
-      </div>
+      <div id="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
       <div class="tb-title" id="tb-title">Overview</div>
     </div>
     <div class="tb-right">
       <div class="seg">
         <button class="seg-btn on" id="mode-q" onclick="setMode('quiz')">Quiz</button>
         <button class="seg-btn" id="mode-f" onclick="setMode('flash')">Cards</button>
+        <button class="seg-btn" id="mode-a" onclick="setMode('abbrev')">Blitz</button>
       </div>
       <button class="go-btn" onclick="startCurrent()">Start →</button>
     </div>
   </div>
 
-  <!-- SCROLLABLE CONTENT -->
   <div id="content">
 
     <!-- HOME -->
     <div id="screen-home" class="screen active">
       <div class="hero">
-        <div class="hero-badge">📡 E-TRENDS · 100 HIGH-PROBABILITY MCQs</div>
+        <div class="hero-badge">📡 E-TRENDS · 170 HIGH-PROBABILITY MCQs</div>
         <h2>Crack Your<br><em>E-Trends</em> Exam</h2>
         <p>Cyberspace · Cybersecurity · E-Commerce · IoT · Cloud Computing — all the abbreviation soup your examiner loves.</p>
         <div class="hero-nums">
-          <div><div class="hn-val">100</div><div class="hn-lbl">Questions</div></div>
+          <div><div class="hn-val">170</div><div class="hn-lbl">Questions</div></div>
           <div><div class="hn-val">6</div><div class="hn-lbl">Topics</div></div>
-          <div><div class="hn-val">2</div><div class="hn-lbl">Modes</div></div>
+          <div><div class="hn-val">3</div><div class="hn-lbl">Modes</div></div>
           <div><div class="hn-val">∞</div><div class="hn-lbl">Retries</div></div>
         </div>
       </div>
-
       <div class="home-grid">
         <div class="hcard q" onclick="startMode('quiz')">
           <div class="hcard-icon">🧠</div>
@@ -400,54 +392,35 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
           <p>Tap to flip — see question first, then the correct answer with all options.</p>
           <button class="hcard-btn" onclick="event.stopPropagation();startMode('flash')">Start Cards →</button>
         </div>
+        <div class="hcard ab" onclick="startMode('abbrev')">
+          <div class="hcard-icon">⚡</div>
+          <h3>Abbrev Blitz</h3>
+          <p>Type full forms, match pairs, or study the cheat-sheet. Master every abbreviation.</p>
+          <button class="hcard-btn" onclick="event.stopPropagation();startMode('abbrev')">Launch Blitz →</button>
+        </div>
       </div>
-
       <div class="unit-list-card">
         <div class="ul-head">Topics at a Glance</div>
         <div class="unit-list">
-          <div class="urow" onclick="quickStart('Cyberspace')">
-            <div class="urow-bar" style="background:#4f8ef7"></div>
-            <div class="urow-info"><div class="urow-name">Cyberspace &amp; Web Basics</div><div class="urow-sub">WWW · HTTP · HTTPS · SSL · Protocols</div></div>
-            <div class="urow-cnt">15 Qs</div>
-          </div>
-          <div class="urow" onclick="quickStart('Security')">
-            <div class="urow-bar" style="background:#f87171"></div>
-            <div class="urow-info"><div class="urow-name">Cybersecurity</div><div class="urow-sub">Malware · Virus · Worm · Phishing · Firewall · VPN</div></div>
-            <div class="urow-cnt">20 Qs</div>
-          </div>
-          <div class="urow" onclick="quickStart('Ecommerce')">
-            <div class="urow-bar" style="background:#34d399"></div>
-            <div class="urow-info"><div class="urow-name">E-Commerce &amp; Digital Platforms</div><div class="urow-sub">B2B · B2C · UPI · SEO · Social Media</div></div>
-            <div class="urow-cnt">15 Qs</div>
-          </div>
-          <div class="urow" onclick="quickStart('IoT')">
-            <div class="urow-bar" style="background:#fbbf24"></div>
-            <div class="urow-info"><div class="urow-name">Internet of Things (IoT)</div><div class="urow-sub">Sensors · MQTT · RFID · Zigbee · Smart Devices</div></div>
-            <div class="urow-cnt">20 Qs</div>
-          </div>
-          <div class="urow" onclick="quickStart('Cloud')">
-            <div class="urow-bar" style="background:#a78bfa"></div>
-            <div class="urow-info"><div class="urow-name">Cloud Computing</div><div class="urow-sub">SaaS · PaaS · IaaS · AWS · Azure · Virtualization</div></div>
-            <div class="urow-cnt">15 Qs</div>
-          </div>
-          <div class="urow" onclick="quickStart('TrueFalse')">
-            <div class="urow-bar" style="background:#22d3ee"></div>
-            <div class="urow-info"><div class="urow-name">True / False Round</div><div class="urow-sub">Rapid revision statements — all key facts</div></div>
-            <div class="urow-cnt">25 Qs</div>
-          </div>
+          <div class="urow" onclick="quickStart('Cyberspace')"><div class="urow-bar" style="background:#4f8ef7"></div><div class="urow-info"><div class="urow-name">Cyberspace &amp; Web Basics</div><div class="urow-sub">WWW · HTTP · HTTPS · SSL · Protocols</div></div><div class="urow-cnt">25 Qs</div></div>
+          <div class="urow" onclick="quickStart('Security')"><div class="urow-bar" style="background:#f87171"></div><div class="urow-info"><div class="urow-name">Cybersecurity</div><div class="urow-sub">Malware · Virus · Worm · Phishing · Firewall · VPN</div></div><div class="urow-cnt">30 Qs</div></div>
+          <div class="urow" onclick="quickStart('Ecommerce')"><div class="urow-bar" style="background:#34d399"></div><div class="urow-info"><div class="urow-name">E-Commerce &amp; Digital Platforms</div><div class="urow-sub">B2B · B2C · UPI · SEO · Social Media</div></div><div class="urow-cnt">25 Qs</div></div>
+          <div class="urow" onclick="quickStart('IoT')"><div class="urow-bar" style="background:#fbbf24"></div><div class="urow-info"><div class="urow-name">Internet of Things (IoT)</div><div class="urow-sub">Sensors · MQTT · RFID · Zigbee · Smart Devices</div></div><div class="urow-cnt">30 Qs</div></div>
+          <div class="urow" onclick="quickStart('Cloud')"><div class="urow-bar" style="background:#a78bfa"></div><div class="urow-info"><div class="urow-name">Cloud Computing</div><div class="urow-sub">SaaS · PaaS · IaaS · AWS · Azure · Virtualization</div></div><div class="urow-cnt">25 Qs</div></div>
+          <div class="urow" onclick="quickStart('TrueFalse')"><div class="urow-bar" style="background:#22d3ee"></div><div class="urow-info"><div class="urow-name">True / False Round</div><div class="urow-sub">Rapid revision statements — all key facts</div></div><div class="urow-cnt">35 Qs</div></div>
         </div>
       </div>
     </div>
 
     <!-- QUIZ -->
     <div id="screen-quiz" class="screen" style="padding:0;height:100%">
-      <div class="qz-wrap" style="height:100%;display:flex;flex-direction:column">
-        <div style="padding:20px 24px 0;flex-shrink:0" id="qz-head-pad">
+      <div class="qz-wrap">
+        <div style="padding:20px 24px 0;flex-shrink:0">
           <div class="qz-top">
             <div class="qz-meta">
               <div class="qz-lbl">Question</div>
               <div class="qz-prog">
-                <div class="qz-num" id="qi-num">1 / 100</div>
+                <div class="qz-num" id="qi-num">1 / 170</div>
                 <div class="pb"><div class="pb-f" id="pbar"></div></div>
               </div>
             </div>
@@ -457,7 +430,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
             </div>
           </div>
         </div>
-
         <div class="qz-body" id="qz-body" style="padding:0 24px 4px">
           <div class="q-card q-inner">
             <div class="q-ghost" id="q-ghost">01</div>
@@ -467,7 +439,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
           <div class="opts" id="opts"></div>
           <div class="fb" id="fb"></div>
         </div>
-
         <div class="qz-foot">
           <button class="nav-btn" id="prev-btn" onclick="prevQ()">← Prev</button>
           <div class="dots-wrap" id="dots"></div>
@@ -481,7 +452,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
       <div style="display:flex;flex-direction:column;height:100%">
         <div style="padding:20px 24px 0;flex-shrink:0">
           <div class="fc-top">
-            <div class="fc-ctr">Card <strong id="fc-n">1</strong> of <strong id="fc-tot">100</strong></div>
+            <div class="fc-ctr">Card <strong id="fc-n">1</strong> of <strong id="fc-tot">170</strong></div>
             <div class="chips"><div class="ch c" style="font-size:.68rem">Tap to flip</div></div>
           </div>
         </div>
@@ -501,6 +472,35 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
           <button class="nav-btn" onclick="fcNav(-1)">← Prev</button>
           <div style="flex:1"></div>
           <button class="nav-btn pri" onclick="fcNav(1)">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABBREV BLITZ -->
+    <div id="screen-abbrev" class="screen" style="padding:0;height:100%">
+      <div class="ab-wrap">
+        <div class="ab-top-pad">
+          <div class="ab-header">
+            <div class="ab-title-row">
+              <div class="ab-badge">⚡ Abbrev Blitz</div>
+              <div id="ab-counter" class="ab-meta"><strong id="ab-done">0</strong> / <strong id="ab-tot">0</strong> done</div>
+            </div>
+            <div class="chips">
+              <div class="ch c">✓ <span id="ab-chip-c">0</span></div>
+              <div class="ch w">✗ <span id="ab-chip-w">0</span></div>
+            </div>
+          </div>
+          <div class="ab-mode-bar">
+            <button class="ab-mode-btn on" id="abm-type" onclick="setAbMode('type')">✏️ Type It</button>
+            <button class="ab-mode-btn" id="abm-match" onclick="setAbMode('match')">🔗 Match Pairs</button>
+            <button class="ab-mode-btn" id="abm-sheet" onclick="setAbMode('sheet')">📋 Cheat Sheet</button>
+          </div>
+        </div>
+        <div class="ab-body" id="ab-body"><!-- dynamic --></div>
+        <div class="ab-foot" id="ab-foot">
+          <button class="nav-btn" id="ab-prev" onclick="abNav(-1)">← Prev</button>
+          <div style="flex:1"></div>
+          <button class="nav-btn pri" id="ab-next" onclick="abNav(1)">Next →</button>
         </div>
       </div>
     </div>
@@ -533,155 +533,328 @@ body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-h
       </div>
     </div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
-</div><!-- /app -->
+  </div>
+</div>
+</div>
 
 <script>
+// ═══════════════════════════════════════════════════════
+//  QUESTION BANK — 170 questions
+// ═══════════════════════════════════════════════════════
 const Q=[
-  // CYBERSPACE & WEB
-  {u:"Cyberspace",q:"Cyberspace refers to:",o:["Physical computer devices","Virtual environment created by digital networks","Only social media websites","Telephone systems only"],a:1},
-  {u:"Cyberspace",q:"WWW stands for:",o:["World Web Wide","Web World Wide","World Wide Web","Wide World Web"],a:2},
-  {u:"Cyberspace",q:"The World Wide Web was invented by:",o:["Bill Gates","Steve Jobs","Tim Berners-Lee","Vint Cerf"],a:2},
-  {u:"Cyberspace",q:"Which protocol is mainly used for web communication?",o:["FTP","SMTP","HTTP","SNMP"],a:2},
-  {u:"Cyberspace",q:"HTTPS is:",o:["Less secure than HTTP","Secure version of HTTP","A browser","A virus"],a:1},
-  {u:"Cyberspace",q:"SSL stands for:",o:["Secure Socket Layer","Security Software Link","System Secure Layer","Software Socket Layer"],a:0},
-  {u:"Cyberspace",q:"SEO stands for:",o:["Search Engine Optimization","Search Email Operation","System Engine Optimization","Software Engine Output"],a:0},
-  {u:"Cyberspace",q:"Which is a search engine?",o:["Chrome","WhatsApp","Facebook","Google"],a:3},
-  {u:"Cyberspace",q:"Blogging means:",o:["Writing online content regularly","Hacking websites","Hardware design","Building routers"],a:0},
-  {u:"Cyberspace",q:"Which company owns Instagram?",o:["Amazon","Google","Meta","Microsoft"],a:2},
-  {u:"Cyberspace",q:"LinkedIn is mainly used for:",o:["Gaming","Professional networking","Antivirus","Shopping"],a:1},
-  {u:"Cyberspace",q:"Which platform is mainly used for short videos?",o:["LinkedIn","TikTok","Gmail","Paytm"],a:1},
-  {u:"Cyberspace",q:"Cookies are mainly used to:",o:["Store user preferences","Delete browsing history","Increase RAM","Damage hardware"],a:0},
-  {u:"Cyberspace",q:"Spam emails are:",o:["Wanted emails","Unwanted emails","Secure emails","Business emails"],a:1},
-  {u:"Cyberspace",q:"CAPTCHA is mainly used to:",o:["Detect humans from bots","Increase speed","Improve graphics","Delete cookies"],a:0},
-  // SECURITY
-  {u:"Security",q:"Malware means:",o:["Safe software","Useful software","Malicious software","Monitoring software"],a:2},
-  {u:"Security",q:"A worm differs from a virus because it:",o:["Needs a host file","Cannot spread","Spreads independently","Only attacks browsers"],a:2},
-  {u:"Security",q:"Trojan horse malware appears as:",o:["Legitimate software","Antivirus","Hardware component","Network cable"],a:0},
-  {u:"Security",q:"Phishing attacks are mainly used to:",o:["Improve internet speed","Steal personal information","Repair systems","Increase storage"],a:1},
-  {u:"Security",q:"Firewall is used to:",o:["Increase memory","Protect network from unauthorized access","Delete files","Improve graphics"],a:1},
-  {u:"Security",q:"VPN stands for:",o:["Virtual Private Network","Variable Public Network","Verified Personal Network","Virtual Protocol Node"],a:0},
-  {u:"Security",q:"A strong password should include:",o:["Only letters","Only numbers","Letters, numbers, and symbols","Date of birth only"],a:2},
-  {u:"Security",q:"Two-factor authentication provides:",o:["Less security","Additional security layer","Faster internet","Free antivirus"],a:1},
-  {u:"Security",q:"Biometrics use:",o:["Passwords","OTPs","Physical traits like fingerprint","PIN only"],a:2},
-  {u:"Security",q:"Ransomware is used to:",o:["Increase speed","Encrypt files and demand payment","Repair hardware","Compress files"],a:1},
-  {u:"Security",q:"Spyware is used to:",o:["Monitor user activity secretly","Improve graphics","Repair network","Speed up internet"],a:0},
-  {u:"Security",q:"Social engineering attacks target:",o:["Hardware only","Human psychology","Operating systems","Printers"],a:1},
-  {u:"Security",q:"DDoS stands for:",o:["Distributed Denial of Service","Data Distribution of Service","Direct Data Operation System","Distributed Data Output Server"],a:0},
-  {u:"Security",q:"Digital signature is used for:",o:["Authentication and integrity","Increasing speed","File compression","Virus removal"],a:0},
-  {u:"Security",q:"Which hacker uses skills legally?",o:["Black hat hacker","White hat hacker","Grey hat hacker","Script kiddie"],a:1},
-  {u:"Security",q:"Which is an example of cyber crime?",o:["Online shopping","Identity theft","Emailing","Video streaming"],a:1},
-  {u:"Security",q:"OTP stands for:",o:["One Time Password","Online Transfer Pass","Official Token Password","One Type Password"],a:0},
-  {u:"Security",q:"Which is NOT an advantage of e-commerce from security angle?",o:["Wider reach","Convenience","Security risks","Lower cost"],a:2},
-  // ECOMMERCE
-  {u:"Ecommerce",q:"E-commerce means:",o:["Buying and selling through internet","Hardware repair","Banking only","Programming only"],a:0},
-  {u:"Ecommerce",q:"B2B stands for:",o:["Business to Buyer","Business to Business","Brand to Brand","Buyer to Buyer"],a:1},
-  {u:"Ecommerce",q:"B2C stands for:",o:["Business to Consumer","Buyer to Company","Business to Customer Care","Brand to Customer"],a:0},
-  {u:"Ecommerce",q:"C2C means:",o:["Company to Company","Customer to Customer","Consumer to Company","Customer to Cloud"],a:1},
-  {u:"Ecommerce",q:"UPI stands for:",o:["Unified Payments Interface","Universal Payment Integration","User Payment Index","Unified Purchase Interface"],a:0},
-  {u:"Ecommerce",q:"Digital wallet is used for:",o:["Online transactions","Hardware repair","File compression","Device cooling"],a:0},
-  {u:"Ecommerce",q:"Which is an advantage of e-commerce?",o:["Limited reach","24/7 availability","No internet needed","Only local customers"],a:1},
-  {u:"Ecommerce",q:"Which is a disadvantage of e-commerce?",o:["Wider reach","Convenience","Security risks","Lower cost"],a:2},
-  // IOT
-  {u:"IoT",q:"IoT stands for:",o:["Internet of Things","Internet of Technology","Integrated Online Tools","Internal Object Transfer"],a:0},
-  {u:"IoT",q:"The term IoT was coined by:",o:["Steve Jobs","Kevin Ashton","Bill Gates","Mark Zuckerberg"],a:1},
-  {u:"IoT",q:"Which IoT component collects environmental data?",o:["Actuator","Sensor","Cloud","Gateway"],a:1},
-  {u:"IoT",q:"An actuator is used to:",o:["Store data","Perform physical action","Monitor network","Compress data"],a:1},
-  {u:"IoT",q:"MQTT stands for:",o:["Message Queue Telemetry Transport","Mobile Query Transfer Technology","Machine Queue Tool","Managed Query Transport Tool"],a:0},
-  {u:"IoT",q:"RFID stands for:",o:["Radio Frequency Identification","Remote File Identification","Radio File Integration Device","Rapid Frequency Input Data"],a:0},
-  {u:"IoT",q:"GPS is mainly used for:",o:["Gaming","Navigation and tracking","Virus protection","File compression"],a:1},
-  {u:"IoT",q:"Zigbee is popular because it:",o:["Uses high power","Consumes low power","Needs cables","Is expensive"],a:1},
-  {u:"IoT",q:"Smart home is an example of:",o:["Traditional network","IoT application","Antivirus system","Database software"],a:1},
-  {u:"IoT",q:"Edge computing means:",o:["Processing data near the source","Sending all data to cloud","Deleting data instantly","Manual data collection"],a:0},
-  {u:"IoT",q:"Which was one of the first IoT devices?",o:["Smart TV","Coca-Cola vending machine","Smartphone","Tablet"],a:1},
-  {u:"IoT",q:"Which component connects IoT devices to cloud?",o:["Gateway","Sensor","Keyboard","Printer"],a:0},
-  {u:"IoT",q:"Which sensor measures temperature?",o:["Pressure sensor","Motion sensor","Temperature sensor","Humidity sensor"],a:2},
-  {u:"IoT",q:"Bluetooth is mainly used for:",o:["Long-range communication","Short-range communication","Cloud storage","Video editing"],a:1},
-  {u:"IoT",q:"Smart farming helps in:",o:["Soil monitoring","Water management","Crop health tracking","All of these"],a:3},
-  {u:"IoT",q:"Which is NOT an IoT device?",o:["Smart thermostat","Fitness band","Traditional chalkboard","Connected car"],a:2},
-  {u:"IoT",q:"Smart meters are used for:",o:["Electricity monitoring","Gaming","Video editing","File sharing"],a:0},
-  {u:"IoT",q:"Which is a key feature of cloud computing?",o:["No scalability","On-demand self-service","No internet","Fixed storage"],a:1},
-  // CLOUD
-  {u:"Cloud",q:"Cloud computing mainly provides:",o:["Internet-based services","Hardware repair","Offline storage only","Manual networking"],a:0},
-  {u:"Cloud",q:"SaaS stands for:",o:["Software as a Service","Security as a Service","Storage as a Service","System as a Service"],a:0},
-  {u:"Cloud",q:"PaaS stands for:",o:["Platform as a Service","Program as a Service","Personal as a Service","Processing as a Service"],a:0},
-  {u:"Cloud",q:"IaaS stands for:",o:["Infrastructure as a Service","Internet as a Service","Interface as a Service","Integration as a Service"],a:0},
-  {u:"Cloud",q:"Which cloud model provides virtual machines?",o:["SaaS","PaaS","IaaS","DaaS"],a:2},
-  {u:"Cloud",q:"Google Drive is an example of:",o:["SaaS","IaaS","LAN","Compiler"],a:0},
-  {u:"Cloud",q:"AWS stands for:",o:["Amazon Web Services","Advanced Web Security","Application Web Storage","Automated Web System"],a:0},
-  {u:"Cloud",q:"Microsoft Azure is a:",o:["Browser","Cloud platform","Search engine","Programming language"],a:1},
-  {u:"Cloud",q:"Elasticity in cloud computing means:",o:["Fixed resources","Ability to scale resources up or down","Strong password","Data compression"],a:1},
-  {u:"Cloud",q:"Virtualization is:",o:["Physical networking","Creation of virtual resources","File deletion","Hardware repair"],a:1},
-  {u:"Cloud",q:"Which cloud model combines public and private cloud?",o:["Public cloud","Private cloud","Hybrid cloud","Community cloud"],a:2},
-  {u:"Cloud",q:"Which is a major concern in cloud computing?",o:["Data security","More flexibility","Easy sharing","Faster internet"],a:0},
-  {u:"Cloud",q:"Which cloud model is owned by one organization?",o:["Public cloud","Private cloud","Hybrid cloud","Community cloud"],a:1},
-  {u:"Cloud",q:"Which cloud model is available to the public?",o:["Public cloud","Private cloud","Hybrid cloud","Internal cloud"],a:0},
-  {u:"Cloud",q:"Multi-tenancy means:",o:["One user uses one server","Multiple users share resources","No sharing allowed","Offline storage"],a:1},
-  {u:"Cloud",q:"Which is an example of cloud storage?",o:["Dropbox","Keyboard","Monitor","Pendrive"],a:0},
-  // TRUE/FALSE
-  {u:"TrueFalse",q:"Virus needs a host file to spread.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Worm spreads independently.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"HTTPS is more secure than HTTP.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"OTP should never be shared.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"LinkedIn is mainly for entertainment videos.",o:["True","False"],a:1},
-  {u:"TrueFalse",q:"Smartwatch is an IoT device.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Zigbee is a low-power technology.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"SaaS gives ready-to-use software.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"PaaS is mainly useful for developers.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"IaaS provides infrastructure resources.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"AWS is owned by Amazon.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Hybrid cloud combines public and private cloud.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Cloud computing reduces the need for physical hardware.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Encryption protects sensitive data.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Ransomware demands money from victims.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"GPS is used in navigation apps.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Cloud storage can be accessed from multiple devices.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Meta owns Facebook and Instagram.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"MQTT is heavier than HTTP.",o:["True","False"],a:1},
-  {u:"TrueFalse",q:"Private cloud gives more control over data.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Virtualization is important in cloud computing.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"DDoS floods a server with traffic.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Trojan pretends to be useful software.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"VPN can help secure public Wi-Fi.",o:["True","False"],a:0},
-  {u:"TrueFalse",q:"Strong passwords should include symbols and numbers.",o:["True","False"],a:0},
+// ── CYBERSPACE & WEB (25) ──
+{u:"Cyberspace",q:"Cyberspace refers to:",o:["Physical computer devices","Virtual environment created by digital networks","Only social media websites","Telephone systems only"],a:1},
+{u:"Cyberspace",q:"WWW stands for:",o:["World Web Wide","Web World Wide","World Wide Web","Wide World Web"],a:2},
+{u:"Cyberspace",q:"The World Wide Web was invented by:",o:["Bill Gates","Steve Jobs","Tim Berners-Lee","Vint Cerf"],a:2},
+{u:"Cyberspace",q:"Which protocol is mainly used for web communication?",o:["FTP","SMTP","HTTP","SNMP"],a:2},
+{u:"Cyberspace",q:"HTTPS is:",o:["Less secure than HTTP","Secure version of HTTP","A browser","A virus"],a:1},
+{u:"Cyberspace",q:"SSL stands for:",o:["Secure Socket Layer","Security Software Link","System Secure Layer","Software Socket Layer"],a:0},
+{u:"Cyberspace",q:"SEO stands for:",o:["Search Engine Optimization","Search Email Operation","System Engine Optimization","Software Engine Output"],a:0},
+{u:"Cyberspace",q:"Which is a search engine?",o:["Chrome","WhatsApp","Facebook","Google"],a:3},
+{u:"Cyberspace",q:"Blogging means:",o:["Writing online content regularly","Hacking websites","Hardware design","Building routers"],a:0},
+{u:"Cyberspace",q:"Which company owns Instagram?",o:["Amazon","Google","Meta","Microsoft"],a:2},
+{u:"Cyberspace",q:"LinkedIn is mainly used for:",o:["Gaming","Professional networking","Antivirus","Shopping"],a:1},
+{u:"Cyberspace",q:"Which platform is mainly used for short videos?",o:["LinkedIn","TikTok","Gmail","Paytm"],a:1},
+{u:"Cyberspace",q:"Cookies are mainly used to:",o:["Store user preferences","Delete browsing history","Increase RAM","Damage hardware"],a:0},
+{u:"Cyberspace",q:"Spam emails are:",o:["Wanted emails","Unwanted emails","Secure emails","Business emails"],a:1},
+{u:"Cyberspace",q:"CAPTCHA is mainly used to:",o:["Detect humans from bots","Increase speed","Improve graphics","Delete cookies"],a:0},
+{u:"Cyberspace",q:"URL stands for:",o:["Universal Resource Locator","Uniform Resource Locator","Unique Registry Link","Universal Record Link"],a:1},
+{u:"Cyberspace",q:"DNS stands for:",o:["Domain Name System","Data Network Service","Digital Name Server","Dynamic Node System"],a:0},
+{u:"Cyberspace",q:"IP address is used to:",o:["Identify devices on a network","Store passwords","Compress files","Delete viruses"],a:0},
+{u:"Cyberspace",q:"Which is a social media platform?",o:["Google Chrome","Twitter / X","Microsoft Word","Adobe Photoshop"],a:1},
+{u:"Cyberspace",q:"HTML stands for:",o:["HyperText Markup Language","High Transfer Markup Link","HyperText Management Layer","Hardware Text Markup Language"],a:0},
+{u:"Cyberspace",q:"FTP is used for:",o:["File transfer","Email sending","Network security","Video streaming"],a:0},
+{u:"Cyberspace",q:"Which browser is made by Google?",o:["Firefox","Safari","Chrome","Edge"],a:2},
+{u:"Cyberspace",q:"A hyperlink allows:",o:["Printing documents","Navigating to another page","Deleting files","Recording audio"],a:1},
+{u:"Cyberspace",q:"Which is NOT a web browser?",o:["Firefox","Opera","Oracle","Safari"],a:2},
+{u:"Cyberspace",q:"Email stands for:",o:["Electrical mail","Electronic mail","Extended mail","Encoded mail"],a:1},
+
+// ── SECURITY (30) ──
+{u:"Security",q:"Malware means:",o:["Safe software","Useful software","Malicious software","Monitoring software"],a:2},
+{u:"Security",q:"A worm differs from a virus because it:",o:["Needs a host file","Cannot spread","Spreads independently","Only attacks browsers"],a:2},
+{u:"Security",q:"Trojan horse malware appears as:",o:["Legitimate software","Antivirus","Hardware component","Network cable"],a:0},
+{u:"Security",q:"Phishing attacks are mainly used to:",o:["Improve internet speed","Steal personal information","Repair systems","Increase storage"],a:1},
+{u:"Security",q:"Firewall is used to:",o:["Increase memory","Protect network from unauthorized access","Delete files","Improve graphics"],a:1},
+{u:"Security",q:"VPN stands for:",o:["Virtual Private Network","Variable Public Network","Verified Personal Network","Virtual Protocol Node"],a:0},
+{u:"Security",q:"A strong password should include:",o:["Only letters","Only numbers","Letters, numbers, and symbols","Date of birth only"],a:2},
+{u:"Security",q:"Two-factor authentication provides:",o:["Less security","Additional security layer","Faster internet","Free antivirus"],a:1},
+{u:"Security",q:"Biometrics use:",o:["Passwords","OTPs","Physical traits like fingerprint","PIN only"],a:2},
+{u:"Security",q:"Ransomware is used to:",o:["Increase speed","Encrypt files and demand payment","Repair hardware","Compress files"],a:1},
+{u:"Security",q:"Spyware is used to:",o:["Monitor user activity secretly","Improve graphics","Repair network","Speed up internet"],a:0},
+{u:"Security",q:"Social engineering attacks target:",o:["Hardware only","Human psychology","Operating systems","Printers"],a:1},
+{u:"Security",q:"DDoS stands for:",o:["Distributed Denial of Service","Data Distribution of Service","Direct Data Operation System","Distributed Data Output Server"],a:0},
+{u:"Security",q:"Digital signature is used for:",o:["Authentication and integrity","Increasing speed","File compression","Virus removal"],a:0},
+{u:"Security",q:"Which hacker uses skills legally?",o:["Black hat hacker","White hat hacker","Grey hat hacker","Script kiddie"],a:1},
+{u:"Security",q:"Which is an example of cyber crime?",o:["Online shopping","Identity theft","Emailing","Video streaming"],a:1},
+{u:"Security",q:"OTP stands for:",o:["One Time Password","Online Transfer Pass","Official Token Password","One Type Password"],a:0},
+{u:"Security",q:"Adware is a type of malware that:",o:["Encrypts files","Displays unwanted ads","Repairs hardware","Speeds up network"],a:1},
+{u:"Security",q:"Which is used to prevent unauthorized access to a network?",o:["Antivirus only","Firewall","USB hub","RAM"],a:1},
+{u:"Security",q:"Encryption converts data into:",o:["Plain text","Unreadable ciphertext","Images","Audio files"],a:1},
+{u:"Security",q:"Keylogger records:",o:["Screen brightness","Keystrokes secretly","File sizes","Network speed"],a:1},
+{u:"Security",q:"Zero-day attack exploits:",o:["Known vulnerabilities","Unknown vulnerabilities before patch","Old software","Outdated hardware"],a:1},
+{u:"Security",q:"Which is NOT a type of malware?",o:["Ransomware","Spyware","Compiler","Worm"],a:2},
+{u:"Security",q:"Social media privacy setting controls:",o:["Internet speed","Who can see your posts","RAM usage","Printer access"],a:1},
+{u:"Security",q:"Black hat hackers are:",o:["Ethical hackers","Malicious hackers","Government hackers","IT professionals"],a:1},
+{u:"Security",q:"A cyber attack that tricks users into revealing passwords is called:",o:["Spoofing","DDoS","Phishing","Keylogging"],a:2},
+{u:"Security",q:"Which cyber law governs IT in India?",o:["IT Act 2000","Companies Act","RTI Act","Data Act 1990"],a:0},
+{u:"Security",q:"SSL/TLS is mainly used for:",o:["File compression","Secure data transmission","Increasing RAM","Printing"],a:1},
+{u:"Security",q:"Botnet is a network of:",o:["Secure servers","Compromised computers controlled remotely","Cloud servers","Wireless routers"],a:1},
+{u:"Security",q:"Which is the safest practice for online banking?",o:["Use public Wi-Fi","Use VPN and 2FA","Share OTP with bank","Use simple passwords"],a:1},
+
+// ── ECOMMERCE (25) ──
+{u:"Ecommerce",q:"E-commerce means:",o:["Buying and selling through internet","Hardware repair","Banking only","Programming only"],a:0},
+{u:"Ecommerce",q:"B2B stands for:",o:["Business to Buyer","Business to Business","Brand to Brand","Buyer to Buyer"],a:1},
+{u:"Ecommerce",q:"B2C stands for:",o:["Business to Consumer","Buyer to Company","Business to Customer Care","Brand to Customer"],a:0},
+{u:"Ecommerce",q:"C2C means:",o:["Company to Company","Customer to Customer","Consumer to Company","Customer to Cloud"],a:1},
+{u:"Ecommerce",q:"UPI stands for:",o:["Unified Payments Interface","Universal Payment Integration","User Payment Index","Unified Purchase Interface"],a:0},
+{u:"Ecommerce",q:"Digital wallet is used for:",o:["Online transactions","Hardware repair","File compression","Device cooling"],a:0},
+{u:"Ecommerce",q:"Which is an advantage of e-commerce?",o:["Limited reach","24/7 availability","No internet needed","Only local customers"],a:1},
+{u:"Ecommerce",q:"Which is a disadvantage of e-commerce?",o:["Wider reach","Convenience","Security risks","Lower cost"],a:2},
+{u:"Ecommerce",q:"Amazon is an example of which model?",o:["C2C","B2B","B2C","G2C"],a:2},
+{u:"Ecommerce",q:"OLX is an example of which e-commerce model?",o:["B2B","B2C","C2C","G2B"],a:2},
+{u:"Ecommerce",q:"Which payment method requires no physical cash?",o:["Barter","Digital payment","Cheque by post","Money order"],a:1},
+{u:"Ecommerce",q:"Net banking allows:",o:["Offline transactions only","Banking transactions via internet","Hardware repairs","Printing files"],a:1},
+{u:"Ecommerce",q:"NEFT stands for:",o:["National Electronic Funds Transfer","Net Exchange Fund Transfer","National Email Fund Transfer","National External Funds Terminal"],a:0},
+{u:"Ecommerce",q:"Digital marketing uses:",o:["Only print media","Only TV ads","Online channels for marketing","Only radio"],a:2},
+{u:"Ecommerce",q:"G2C in e-governance means:",o:["Government to Citizen","Government to Company","Group to Customer","General to Consumer"],a:0},
+{u:"Ecommerce",q:"Which is a popular Indian e-commerce app?",o:["Flipkart","Facebook","Chrome","Zoom"],a:0},
+{u:"Ecommerce",q:"QR code is used for:",o:["Quick data scanning","Video editing","Hardware repair","Network hacking"],a:0},
+{u:"Ecommerce",q:"Podcast is a type of:",o:["Digital audio/video content","Antivirus software","Hardware device","Network cable"],a:0},
+{u:"Ecommerce",q:"Influencer marketing uses:",o:["Social media personalities","TV anchors only","Print media only","Radio jockeys only"],a:0},
+{u:"Ecommerce",q:"IMPS stands for:",o:["Immediate Payment Service","Internet Money Payment System","Integrated Mobile Payment Solution","Internal Money Processing Service"],a:0},
+{u:"Ecommerce",q:"Which is NOT an e-commerce payment method?",o:["Credit card","Debit card","UPI","Fax machine"],a:3},
+{u:"Ecommerce",q:"Drop-shipping in e-commerce means:",o:["Storing all goods","Delivering without storing products","Free shipping only","Returning goods"],a:1},
+{u:"Ecommerce",q:"Paytm is mainly a:",o:["Search engine","Digital payment app","Cloud service","IoT device"],a:1},
+{u:"Ecommerce",q:"E-commerce platform Shopify helps in:",o:["Setting up online stores","Network hacking","File compression","Antivirus"],a:0},
+{u:"Ecommerce",q:"Which is a key feature of mobile commerce (m-commerce)?",o:["Requires desktop","Transactions via mobile devices","Needs cable connection","Works offline only"],a:1},
+
+// ── IOT (30) ──
+{u:"IoT",q:"IoT stands for:",o:["Internet of Things","Internet of Technology","Integrated Online Tools","Internal Object Transfer"],a:0},
+{u:"IoT",q:"The term IoT was coined by:",o:["Steve Jobs","Kevin Ashton","Bill Gates","Mark Zuckerberg"],a:1},
+{u:"IoT",q:"Which IoT component collects environmental data?",o:["Actuator","Sensor","Cloud","Gateway"],a:1},
+{u:"IoT",q:"An actuator is used to:",o:["Store data","Perform physical action","Monitor network","Compress data"],a:1},
+{u:"IoT",q:"MQTT stands for:",o:["Message Queue Telemetry Transport","Mobile Query Transfer Technology","Machine Queue Tool","Managed Query Transport Tool"],a:0},
+{u:"IoT",q:"RFID stands for:",o:["Radio Frequency Identification","Remote File Identification","Radio File Integration Device","Rapid Frequency Input Data"],a:0},
+{u:"IoT",q:"GPS is mainly used for:",o:["Gaming","Navigation and tracking","Virus protection","File compression"],a:1},
+{u:"IoT",q:"Zigbee is popular because it:",o:["Uses high power","Consumes low power","Needs cables","Is expensive"],a:1},
+{u:"IoT",q:"Smart home is an example of:",o:["Traditional network","IoT application","Antivirus system","Database software"],a:1},
+{u:"IoT",q:"Edge computing means:",o:["Processing data near the source","Sending all data to cloud","Deleting data instantly","Manual data collection"],a:0},
+{u:"IoT",q:"Which was one of the first IoT devices?",o:["Smart TV","Coca-Cola vending machine","Smartphone","Tablet"],a:1},
+{u:"IoT",q:"Which component connects IoT devices to cloud?",o:["Gateway","Sensor","Keyboard","Printer"],a:0},
+{u:"IoT",q:"Which sensor measures temperature?",o:["Pressure sensor","Motion sensor","Temperature sensor","Humidity sensor"],a:2},
+{u:"IoT",q:"Bluetooth is mainly used for:",o:["Long-range communication","Short-range communication","Cloud storage","Video editing"],a:1},
+{u:"IoT",q:"Smart farming helps in:",o:["Soil monitoring","Water management","Crop health tracking","All of these"],a:3},
+{u:"IoT",q:"Which is NOT an IoT device?",o:["Smart thermostat","Fitness band","Traditional chalkboard","Connected car"],a:2},
+{u:"IoT",q:"Smart meters are used for:",o:["Electricity monitoring","Gaming","Video editing","File sharing"],a:0},
+{u:"IoT",q:"Which protocol is lightweight and used in IoT?",o:["HTTP","MQTT","FTP","SMTP"],a:1},
+{u:"IoT",q:"Wi-Fi in IoT provides:",o:["Short-range, high-power connectivity","Long-range, low-power connectivity","Wired connectivity only","Bluetooth connectivity"],a:0},
+{u:"IoT",q:"LoRa in IoT stands for:",o:["Long Range","Low Radio","Large Range","Local Radio"],a:0},
+{u:"IoT",q:"Which is a smart wearable device?",o:["Microwave","Smartwatch","Projector","Keyboard"],a:1},
+{u:"IoT",q:"IoT gateway is used to:",o:["Connect IoT devices to the internet","Store files","Run antivirus","Print documents"],a:0},
+{u:"IoT",q:"Smart city uses IoT for:",o:["Traffic management","Waste management","Energy efficiency","All of these"],a:3},
+{u:"IoT",q:"Which industry uses IoT for patient monitoring?",o:["Education","Healthcare","Agriculture","Entertainment"],a:1},
+{u:"IoT",q:"NFC stands for:",o:["Near Field Communication","Network File Control","New Frequency Channel","Node Field Communication"],a:0},
+{u:"IoT",q:"Industrial IoT (IIoT) is used in:",o:["Manufacturing and automation","Only homes","Only hospitals","Only schools"],a:0},
+{u:"IoT",q:"IPv6 is important for IoT because:",o:["It is older","It provides more IP addresses","It is slower","It uses less power"],a:1},
+{u:"IoT",q:"Which is a key challenge of IoT?",o:["Too many sensors","Security and privacy risks","Too fast internet","No cloud storage"],a:1},
+{u:"IoT",q:"Smart traffic lights are an example of:",o:["Traditional infrastructure","IoT in smart city","E-commerce","Cloud computing"],a:1},
+{u:"IoT",q:"Wearable technology is mainly used for:",o:["Health monitoring","File compression","Email sending","Cloud storage"],a:0},
+
+// ── CLOUD (25) ──
+{u:"Cloud",q:"Cloud computing mainly provides:",o:["Internet-based services","Hardware repair","Offline storage only","Manual networking"],a:0},
+{u:"Cloud",q:"SaaS stands for:",o:["Software as a Service","Security as a Service","Storage as a Service","System as a Service"],a:0},
+{u:"Cloud",q:"PaaS stands for:",o:["Platform as a Service","Program as a Service","Personal as a Service","Processing as a Service"],a:0},
+{u:"Cloud",q:"IaaS stands for:",o:["Infrastructure as a Service","Internet as a Service","Interface as a Service","Integration as a Service"],a:0},
+{u:"Cloud",q:"Which cloud model provides virtual machines?",o:["SaaS","PaaS","IaaS","DaaS"],a:2},
+{u:"Cloud",q:"Google Drive is an example of:",o:["SaaS","IaaS","LAN","Compiler"],a:0},
+{u:"Cloud",q:"AWS stands for:",o:["Amazon Web Services","Advanced Web Security","Application Web Storage","Automated Web System"],a:0},
+{u:"Cloud",q:"Microsoft Azure is a:",o:["Browser","Cloud platform","Search engine","Programming language"],a:1},
+{u:"Cloud",q:"Elasticity in cloud computing means:",o:["Fixed resources","Ability to scale resources up or down","Strong password","Data compression"],a:1},
+{u:"Cloud",q:"Virtualization is:",o:["Physical networking","Creation of virtual resources","File deletion","Hardware repair"],a:1},
+{u:"Cloud",q:"Which cloud model combines public and private cloud?",o:["Public cloud","Private cloud","Hybrid cloud","Community cloud"],a:2},
+{u:"Cloud",q:"Which is a major concern in cloud computing?",o:["Data security","More flexibility","Easy sharing","Faster internet"],a:0},
+{u:"Cloud",q:"Which cloud model is owned by one organization?",o:["Public cloud","Private cloud","Hybrid cloud","Community cloud"],a:1},
+{u:"Cloud",q:"Which cloud model is available to the public?",o:["Public cloud","Private cloud","Hybrid cloud","Internal cloud"],a:0},
+{u:"Cloud",q:"Multi-tenancy means:",o:["One user uses one server","Multiple users share resources","No sharing allowed","Offline storage"],a:1},
+{u:"Cloud",q:"Which is an example of cloud storage?",o:["Dropbox","Keyboard","Monitor","Pendrive"],a:0},
+{u:"Cloud",q:"Google Cloud is a competitor to:",o:["LinkedIn","AWS","WhatsApp","TikTok"],a:1},
+{u:"Cloud",q:"SLA in cloud stands for:",o:["Service Level Agreement","Software Link Access","System Load Average","Secure Layer Access"],a:0},
+{u:"Cloud",q:"Pay-as-you-go means:",o:["Fixed monthly charges","Pay only for what you use","Free cloud service","One-time payment"],a:1},
+{u:"Cloud",q:"Which cloud service does Netflix mainly use?",o:["Microsoft Azure","AWS","Google Cloud","IBM Cloud"],a:1},
+{u:"Cloud",q:"Serverless computing means:",o:["No servers exist","Developers don't manage servers","No internet needed","Offline processing"],a:1},
+{u:"Cloud",q:"Data migration to cloud means:",o:["Deleting old data","Moving data from local to cloud","Hacking cloud data","Compressing files"],a:1},
+{u:"Cloud",q:"CDN stands for:",o:["Content Delivery Network","Central Data Node","Cloud Distribution Network","Content Download Node"],a:0},
+{u:"Cloud",q:"Which is an example of PaaS?",o:["Gmail","Google App Engine","Dropbox","YouTube"],a:1},
+{u:"Cloud",q:"Scalability in cloud means:",o:["Fixed storage","Growing or shrinking resources as needed","No internet","Local storage only"],a:1},
+
+// ── TRUE/FALSE (35) ──
+{u:"TrueFalse",q:"Virus needs a host file to spread.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Worm spreads independently.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"HTTPS is more secure than HTTP.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"OTP should never be shared.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"LinkedIn is mainly for entertainment videos.",o:["True","False"],a:1},
+{u:"TrueFalse",q:"Smartwatch is an IoT device.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Zigbee is a low-power technology.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"SaaS gives ready-to-use software.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"PaaS is mainly useful for developers.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"IaaS provides infrastructure resources.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"AWS is owned by Amazon.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Hybrid cloud combines public and private cloud.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Cloud computing reduces the need for physical hardware.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Encryption protects sensitive data.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Ransomware demands money from victims.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"GPS is used in navigation apps.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Cloud storage can be accessed from multiple devices.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Meta owns Facebook and Instagram.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"MQTT is heavier than HTTP.",o:["True","False"],a:1},
+{u:"TrueFalse",q:"Private cloud gives more control over data.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Virtualization is important in cloud computing.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"DDoS floods a server with traffic.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Trojan pretends to be useful software.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"VPN can help secure public Wi-Fi.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Strong passwords should include symbols and numbers.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"B2B means business selling to consumers.",o:["True","False"],a:1},
+{u:"TrueFalse",q:"UPI is used for digital payments in India.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Phishing is a type of social engineering attack.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"RFID uses radio waves for identification.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Edge computing sends all data to central cloud.",o:["True","False"],a:1},
+{u:"TrueFalse",q:"NFC is used for contactless payments.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"Google Drive is an example of SaaS.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"All IoT devices need to be wired.",o:["True","False"],a:1},
+{u:"TrueFalse",q:"Kevin Ashton coined the term IoT.",o:["True","False"],a:0},
+{u:"TrueFalse",q:"The IT Act 2000 governs cyber law in India.",o:["True","False"],a:0},
 ];
 
-// ── STATE ──
-let S={unit:'all',mode:'quiz',qs:[],qi:0,ans:[],score:0,wrong:0,fcI:0,fcFlip:false,sesC:0,sesW:0,sesT:0};
+// ═══════════════════════════════════════════════════════
+//  ABBREVIATIONS DATABASE
+// ═══════════════════════════════════════════════════════
+const ABBREVS=[
+  {a:"WWW",f:"World Wide Web",u:"Cyberspace"},
+  {a:"HTTP",f:"HyperText Transfer Protocol",u:"Cyberspace"},
+  {a:"HTTPS",f:"HyperText Transfer Protocol Secure",u:"Cyberspace"},
+  {a:"SSL",f:"Secure Socket Layer",u:"Cyberspace"},
+  {a:"TLS",f:"Transport Layer Security",u:"Cyberspace"},
+  {a:"URL",f:"Uniform Resource Locator",u:"Cyberspace"},
+  {a:"DNS",f:"Domain Name System",u:"Cyberspace"},
+  {a:"IP",f:"Internet Protocol",u:"Cyberspace"},
+  {a:"HTML",f:"HyperText Markup Language",u:"Cyberspace"},
+  {a:"FTP",f:"File Transfer Protocol",u:"Cyberspace"},
+  {a:"SEO",f:"Search Engine Optimization",u:"Cyberspace"},
+  {a:"SMTP",f:"Simple Mail Transfer Protocol",u:"Cyberspace"},
+  {a:"ISP",f:"Internet Service Provider",u:"Cyberspace"},
+  {a:"VPN",f:"Virtual Private Network",u:"Security"},
+  {a:"OTP",f:"One Time Password",u:"Security"},
+  {a:"DDoS",f:"Distributed Denial of Service",u:"Security"},
+  {a:"2FA",f:"Two-Factor Authentication",u:"Security"},
+  {a:"SSL/TLS",f:"Secure Sockets Layer / Transport Layer Security",u:"Security"},
+  {a:"IDS",f:"Intrusion Detection System",u:"Security"},
+  {a:"IPS",f:"Intrusion Prevention System",u:"Security"},
+  {a:"UPI",f:"Unified Payments Interface",u:"Ecommerce"},
+  {a:"NEFT",f:"National Electronic Funds Transfer",u:"Ecommerce"},
+  {a:"RTGS",f:"Real Time Gross Settlement",u:"Ecommerce"},
+  {a:"IMPS",f:"Immediate Payment Service",u:"Ecommerce"},
+  {a:"B2B",f:"Business to Business",u:"Ecommerce"},
+  {a:"B2C",f:"Business to Consumer",u:"Ecommerce"},
+  {a:"C2C",f:"Consumer to Consumer",u:"Ecommerce"},
+  {a:"G2C",f:"Government to Citizen",u:"Ecommerce"},
+  {a:"QR",f:"Quick Response (code)",u:"Ecommerce"},
+  {a:"IoT",f:"Internet of Things",u:"IoT"},
+  {a:"MQTT",f:"Message Queue Telemetry Transport",u:"IoT"},
+  {a:"RFID",f:"Radio Frequency Identification",u:"IoT"},
+  {a:"GPS",f:"Global Positioning System",u:"IoT"},
+  {a:"NFC",f:"Near Field Communication",u:"IoT"},
+  {a:"LoRa",f:"Long Range (Radio)",u:"IoT"},
+  {a:"IIoT",f:"Industrial Internet of Things",u:"IoT"},
+  {a:"IPv6",f:"Internet Protocol version 6",u:"IoT"},
+  {a:"SaaS",f:"Software as a Service",u:"Cloud"},
+  {a:"PaaS",f:"Platform as a Service",u:"Cloud"},
+  {a:"IaaS",f:"Infrastructure as a Service",u:"Cloud"},
+  {a:"AWS",f:"Amazon Web Services",u:"Cloud"},
+  {a:"CDN",f:"Content Delivery Network",u:"Cloud"},
+  {a:"SLA",f:"Service Level Agreement",u:"Cloud"},
+  {a:"VM",f:"Virtual Machine",u:"Cloud"},
+];
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+let S={
+  unit:'all', mode:'quiz',
+  qs:[], qi:0, ans:[], score:0, wrong:0,
+  fcI:0, fcFlip:false,
+  sesC:0, sesW:0, sesT:0,
+  abMode:'type', abI:0, abQs:[], abC:0, abW:0,
+  mpItems:[], mpSelAb:null, mpSelFull:null, mpMatched:0
+};
 
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
-function getQ(){return shuffle(S.unit==='all'?Q:Q.filter(q=>q.u===S.unit))}
+function getQ(){return shuffle(S.unit==='all'?[...Q]:Q.filter(q=>q.u===S.unit))}
+function getAbbrevs(){return S.unit==='all'?[...ABBREVS]:ABBREVS.filter(a=>a.u===S.unit)}
+
+// ── SIDEBAR STATS ──
+function updateSidebarStats(){
+  document.getElementById('sb-c').textContent=S.sesC;
+  document.getElementById('sb-w').textContent=S.sesW;
+  document.getElementById('sb-t').textContent=S.sesT;
+}
+function recordAttempt(correct){
+  S.sesT++;
+  if(correct)S.sesC++;else S.sesW++;
+  updateSidebarStats();
+}
 
 // ── NAV ──
-const TITLES={home:'Overview',quiz:'Quiz Mode',flash:'Flashcards',result:'Results'};
+const TITLES={home:'Overview',quiz:'Quiz Mode',flash:'Flashcards',abbrev:'Abbrev Blitz',result:'Results'};
 function navTo(key,el){
   document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
-  if(el)el.classList.add('active');
+  if(el){el.classList.add('active');}
   document.getElementById('tb-title').textContent=TITLES[key]||key;
-  ['home','quiz','flash','result'].forEach(k=>{
+  ['home','quiz','flash','abbrev','result'].forEach(k=>{
     const s=document.getElementById('screen-'+k);
     if(s)s.classList.toggle('active',k===key);
   });
-  // also scroll content to top
   document.getElementById('content').scrollTop=0;
   closeSidebar();
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show')}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
-function pickUnit(el){document.querySelectorAll('.unit-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.unit=el.dataset.unit}
-function setMode(m){S.mode=m;document.getElementById('mode-q').classList.toggle('on',m==='quiz');document.getElementById('mode-f').classList.toggle('on',m==='flash')}
+
+function pickUnit(el){
+  document.querySelectorAll('.unit-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  S.unit=el.dataset.unit;
+}
+function setMode(m){
+  S.mode=m;
+  ['q','f','a'].forEach(k=>{
+    const btn=document.getElementById('mode-'+k);
+    if(btn){btn.classList.remove('on','ab');}
+  });
+  const map={quiz:'q',flash:'f',abbrev:'a'};
+  const btn=document.getElementById('mode-'+map[m]);
+  if(btn){btn.classList.add('on');if(m==='abbrev')btn.classList.add('ab');}
+}
 function startCurrent(){startMode(S.mode)}
 
 // ── START ──
 function startMode(mode){
-  S.mode=mode;S.qs=getQ();if(!S.qs.length)return;
+  S.mode=mode;
+  setMode(mode);
+  S.qs=getQ();
   if(mode==='quiz'){
     S.qi=0;S.score=0;S.wrong=0;S.ans=new Array(S.qs.length).fill(null);
-    navTo('quiz',document.querySelector('[data-screen=quiz]'));renderQ();
-  }else{
+    navTo('quiz',document.querySelector('[data-screen=quiz]'));
+    renderQ();
+  }else if(mode==='flash'){
+    if(!S.qs.length)return;
     S.fcI=0;S.fcFlip=false;
-    navTo('flash',document.querySelector('[data-screen=flash]'));renderFC();
+    navTo('flash',document.querySelector('[data-screen=flash]'));
+    renderFC();
+  }else if(mode==='abbrev'){
+    S.abQs=shuffle(getAbbrevs());
+    S.abI=0;S.abC=0;S.abW=0;
+    navTo('abbrev',document.querySelector('[data-screen=abbrev]'));
+    setAbMode(S.abMode);
   }
 }
 function quickStart(unit){
@@ -690,7 +863,9 @@ function quickStart(unit){
   startMode('quiz');
 }
 
-// ── QUIZ ──
+// ═══════════════════════════════════════════════════════
+//  QUIZ
+// ═══════════════════════════════════════════════════════
 function renderQ(){
   const q=S.qs[S.qi],tot=S.qs.length,i=S.qi;
   document.getElementById('qi-num').textContent=`${i+1} / ${tot}`;
@@ -700,7 +875,6 @@ function renderQ(){
   document.getElementById('q-ghost').textContent=String(i+1).padStart(2,'0');
   document.getElementById('q-tag').textContent=q.u;
   document.getElementById('q-txt').textContent=q.q;
-
   const L=['A','B','C','D'];
   const ol=document.getElementById('opts');
   ol.innerHTML='';
@@ -716,15 +890,12 @@ function renderQ(){
     }
     ol.appendChild(b);
   });
-
   const fb=document.getElementById('fb');
   if(S.ans[i]!==null){
     const ok=S.ans[i]===q.a;
     fb.className='fb show '+(ok?'c':'w');
-    fb.textContent=ok?`✅ Correct! "${q.o[q.a]}"`:`❌ Wrong. Answer: "${q.o[q.a]}"`;
+    fb.textContent=ok?`✅ Correct! "${q.o[q.a]}"`:`❌ Wrong. Correct answer: "${q.o[q.a]}"`;
   }else{fb.className='fb'}
-
-  // dots
   const dt=document.getElementById('dots');
   dt.innerHTML='';
   S.qs.forEach((_,j)=>{
@@ -735,24 +906,17 @@ function renderQ(){
     d.onclick=()=>{S.qi=j;renderQ()};
     dt.appendChild(d);
   });
-
   document.getElementById('prev-btn').disabled=i===0;
   document.getElementById('next-btn').textContent=i===tot-1?'Finish ✓':'Next →';
-
-  // scroll body to top on question change
   const body=document.getElementById('qz-body');
   if(body)body.scrollTop=0;
 }
-
 function pick(j){
   if(S.ans[S.qi]!==null)return;
   const q=S.qs[S.qi];S.ans[S.qi]=j;
   const ok=j===q.a;
   if(ok)S.score++;else S.wrong++;
-  S.sesT++;if(ok)S.sesC++;else S.sesW++;
-  document.getElementById('sb-c').textContent=S.sesC;
-  document.getElementById('sb-w').textContent=S.sesW;
-  document.getElementById('sb-t').textContent=S.sesT;
+  recordAttempt(ok);
   renderQ();
 }
 function nextQ(){if(S.qi<S.qs.length-1){S.qi++;renderQ();}else showResult()}
@@ -770,17 +934,16 @@ function showResult(){
   document.getElementById('r-sub').textContent=msgs[1];
   document.getElementById('res-nav-item').style.display='flex';
   navTo('result',document.querySelector('[data-screen=result]'));
-  setTimeout(()=>{
-    const c=326.7,off=c-(pct/100)*c;
-    document.getElementById('ring-c').style.strokeDashoffset=off;
-  },120);
+  setTimeout(()=>{const c=326.7,off=c-(pct/100)*c;document.getElementById('ring-c').style.strokeDashoffset=off;},120);
 }
 function restartQuiz(){
   S.qs=getQ();S.qi=0;S.score=0;S.wrong=0;S.ans=new Array(S.qs.length).fill(null);
   navTo('quiz',document.querySelector('[data-screen=quiz]'));renderQ();
 }
 
-// ── FLASHCARD ──
+// ═══════════════════════════════════════════════════════
+//  FLASHCARD
+// ═══════════════════════════════════════════════════════
 function renderFC(){
   const q=S.qs[S.fcI],tot=S.qs.length;
   document.getElementById('fc-n').textContent=S.fcI+1;
@@ -799,8 +962,192 @@ function renderFC(){
 function flipCard(){S.fcFlip=!S.fcFlip;document.getElementById('flashcard').classList.toggle('flipped',S.fcFlip)}
 function fcNav(d){S.fcI=Math.max(0,Math.min(S.qs.length-1,S.fcI+d));renderFC()}
 
-// init
+// ═══════════════════════════════════════════════════════
+//  ABBREV BLITZ
+// ═══════════════════════════════════════════════════════
+function setAbMode(m){
+  S.abMode=m;
+  ['type','match','sheet'].forEach(k=>{
+    const b=document.getElementById('abm-'+k);
+    if(b)b.classList.toggle('on',k===m);
+  });
+  const foot=document.getElementById('ab-foot');
+  if(m==='match'||m==='sheet')foot.style.display='none';
+  else foot.style.display='flex';
+
+  // reset abbrev list for current filter
+  S.abQs=shuffle(getAbbrevs());
+  S.abI=0;S.abC=0;S.abW=0;
+  document.getElementById('ab-chip-c').textContent=0;
+  document.getElementById('ab-chip-w').textContent=0;
+
+  if(m==='type')renderTypeIt();
+  else if(m==='match')renderMatchGame();
+  else renderCheatSheet();
+
+  updateAbCounter();
+}
+
+function updateAbCounter(){
+  const tot=S.abQs.length;
+  document.getElementById('ab-done').textContent=S.abI;
+  document.getElementById('ab-tot').textContent=tot;
+}
+
+// ── TYPE-IT ──
+function renderTypeIt(){
+  const list=S.abQs;
+  if(!list.length){document.getElementById('ab-body').innerHTML='<div style="padding:40px;text-align:center;color:var(--txt2)">No abbreviations for this filter.</div>';return;}
+  const item=list[S.abI];
+  const html=`
+    <div class="ti-card">
+      <div class="ti-unit">${item.u}</div>
+      <div class="ti-abbrev">${item.a}</div>
+      <div class="ti-unit">What does this stand for?</div>
+      <div style="margin-top:16px" class="ti-input-row">
+        <input class="ti-input" id="ti-inp" type="text" placeholder="Type the full form…" autocomplete="off" onkeydown="if(event.key==='Enter')checkType()">
+        <button class="ti-check" onclick="checkType()">Check</button>
+        <button class="ti-reveal" onclick="revealType()">Reveal</button>
+      </div>
+      <div class="ti-hint">Hint: <span>${item.f.split(' ').map(w=>'_'.repeat(w.length)).join(' ')}</span></div>
+      <div class="ti-fb" id="ti-fb"></div>
+    </div>`;
+  document.getElementById('ab-body').innerHTML=html;
+  document.getElementById('ti-inp').focus();
+  updateAbCounter();
+}
+
+function checkType(){
+  const inp=document.getElementById('ti-inp');
+  const item=S.abQs[S.abI];
+  const val=inp.value.trim().toLowerCase();
+  const correct=item.f.toLowerCase();
+  const fb=document.getElementById('ti-fb');
+  const ok=val===correct||val.replace(/[^a-z0-9]/g,'')===correct.replace(/[^a-z0-9]/g,'');
+  inp.classList.add(ok?'ok':'bad');
+  fb.className='ti-fb show '+(ok?'ok':'bad');
+  if(ok){
+    fb.textContent='✅ Correct! '+item.f;
+    S.abC++;document.getElementById('ab-chip-c').textContent=S.abC;
+    recordAttempt(true);
+  }else{
+    fb.textContent='❌ Wrong. Answer: '+item.f;
+    S.abW++;document.getElementById('ab-chip-w').textContent=S.abW;
+    recordAttempt(false);
+  }
+  inp.disabled=true;
+  document.querySelector('.ti-check').disabled=true;
+}
+
+function revealType(){
+  const item=S.abQs[S.abI];
+  const fb=document.getElementById('ti-fb');
+  fb.className='ti-fb show rev';
+  fb.textContent='ℹ️ Full form: '+item.f;
+  const inp=document.getElementById('ti-inp');
+  if(inp){inp.value=item.f;inp.disabled=true;}
+  document.querySelector('.ti-check').disabled=true;
+}
+
+function abNav(d){
+  const list=S.abQs;
+  S.abI=Math.max(0,Math.min(list.length-1,S.abI+d));
+  if(S.abMode==='type')renderTypeIt();
+  updateAbCounter();
+}
+
+// ── MATCH PAIRS ──
+function renderMatchGame(){
+  const allAb=shuffle(getAbbrevs());
+  const pool=allAb.slice(0,Math.min(8,allAb.length));
+  if(pool.length<2){
+    document.getElementById('ab-body').innerHTML=`<div class="mp-intro"><p style="color:var(--txt2)">Not enough abbreviations for this filter. Try "All Topics".</p></div>`;
+    return;
+  }
+  S.mpItems=pool;S.mpSelAb=null;S.mpSelFull=null;S.mpMatched=0;
+  const abbrevs=shuffle(pool.map(p=>p.a));
+  const fulls=shuffle(pool.map(p=>p.f));
+  const scoreHtml=`<div class="mp-score-row"><div><div class="mp-s-lbl">Matched</div><div class="mp-s-val sg" id="mp-matched">0 / ${pool.length}</div></div><div><div class="mp-s-lbl">Tries</div><div class="mp-s-val sb_" id="mp-tries">0</div></div><button class="nav-btn" onclick="renderMatchGame()" style="padding:6px 14px;font-size:.78rem">🔁 New Set</button></div>`;
+  let leftCol=abbrevs.map(a=>`<div class="mp-item abbrev-col" data-ab="${a}" onclick="mpClickAb(this)">${a}</div>`).join('');
+  let rightCol=fulls.map(f=>`<div class="mp-item" data-full="${CSS.escape(f)}" data-fullraw="${f.replace(/"/g,'&quot;')}" onclick="mpClickFull(this)">${f}</div>`).join('');
+  document.getElementById('ab-body').innerHTML=scoreHtml+`<div style="margin-top:10px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><div class="mp-col-lbl">Abbreviation</div>${leftCol}</div><div><div class="mp-col-lbl">Full Form</div>${rightCol}</div></div></div>`;
+  S.mpTries=0;
+}
+
+let mpTries=0;
+function mpClickAb(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('.mp-item.abbrev-col.sel').forEach(e=>e.classList.remove('sel'));
+  el.classList.add('sel');
+  S.mpSelAb=el.dataset.ab;
+  if(S.mpSelFull)checkMatch();
+}
+function mpClickFull(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('.mp-item:not(.abbrev-col).sel').forEach(e=>e.classList.remove('sel'));
+  el.classList.add('sel');
+  S.mpSelFull=el.dataset.fullraw||el.textContent;
+  if(S.mpSelAb)checkMatch();
+}
+function checkMatch(){
+  mpTries++;
+  document.getElementById('mp-tries').textContent=mpTries;
+  const pair=S.mpItems.find(p=>p.a===S.mpSelAb);
+  const ok=pair&&pair.f===S.mpSelFull;
+  if(ok){
+    // mark matched
+    document.querySelectorAll('.mp-item.abbrev-col.sel').forEach(e=>e.classList.replace('sel','matched'));
+    document.querySelectorAll('.mp-item:not(.abbrev-col).sel').forEach(e=>e.classList.replace('sel','matched'));
+    S.mpMatched++;
+    document.getElementById('mp-matched').textContent=`${S.mpMatched} / ${S.mpItems.length}`;
+    recordAttempt(true);
+    if(S.mpMatched===S.mpItems.length){
+      setTimeout(()=>{
+        document.getElementById('ab-body').insertAdjacentHTML('afterbegin',`<div style="padding:16px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:10px;color:var(--green);font-weight:600;margin-bottom:12px;text-align:center">🎉 All matched! Score: ${S.mpItems.length}/${mpTries} tries</div>`);
+      },200);
+    }
+  }else{
+    recordAttempt(false);
+    const selAbs=document.querySelectorAll('.mp-item.abbrev-col.sel');
+    const selFulss=document.querySelectorAll('.mp-item:not(.abbrev-col).sel');
+    selAbs.forEach(e=>{e.classList.add('wrong-flash');setTimeout(()=>e.classList.remove('wrong-flash'),400)});
+    selFulss.forEach(e=>{e.classList.add('wrong-flash');setTimeout(()=>e.classList.remove('wrong-flash'),400)});
+    setTimeout(()=>{
+      selAbs.forEach(e=>e.classList.remove('sel'));
+      selFulss.forEach(e=>e.classList.remove('sel'));
+    },400);
+  }
+  S.mpSelAb=null;S.mpSelFull=null;
+}
+
+// ── CHEAT SHEET ──
+function renderCheatSheet(){
+  const list=getAbbrevs();
+  const tableRows=list.map(item=>`
+    <tr>
+      <td><span class="cs-abbrev">${item.a}</span></td>
+      <td class="cs-full">${item.f}</td>
+      <td><span class="cs-unit-chip ${item.u}">${item.u}</span></td>
+    </tr>`).join('');
+  document.getElementById('ab-body').innerHTML=`
+    <input class="cs-search" id="cs-search" type="text" placeholder="Search abbreviation or full form…" oninput="filterSheet(this.value)">
+    <table class="cs-table" id="cs-table">
+      <thead><tr><th>Abbrev</th><th>Full Form</th><th>Topic</th></tr></thead>
+      <tbody id="cs-body">${tableRows}</tbody>
+    </table>`;
+}
+function filterSheet(val){
+  const rows=document.querySelectorAll('#cs-body tr');
+  const v=val.toLowerCase();
+  rows.forEach(r=>{
+    const txt=r.textContent.toLowerCase();
+    r.style.display=txt.includes(v)?'':'none';
+  });
+}
+
+// ── INIT ──
 S.qs=getQ();
+updateSidebarStats();
 </script>
 </body>
 </html>
