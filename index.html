@@ -3,909 +3,743 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Tools MCQ Practice</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<title>AI Tools — MCQ Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --card: #1a1a26;
-    --accent: #7c3aed;
-    --accent2: #06b6d4;
-    --correct: #10b981;
-    --wrong: #ef4444;
-    --text: #e8e8f0;
-    --muted: #6b6b8a;
-    --border: #2a2a3e;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px 16px;
-    background-image: radial-gradient(ellipse at 20% 10%, rgba(124,58,237,0.15) 0%, transparent 50%),
-                      radial-gradient(ellipse at 80% 80%, rgba(6,182,212,0.1) 0%, transparent 50%);
-  }
-
-  header {
-    width: 100%;
-    max-width: 720px;
-    text-align: center;
-    margin-bottom: 32px;
-    animation: fadeDown 0.6s ease;
-  }
-
-  header h1 {
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #a78bfa, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  header p {
-    color: var(--muted);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    margin-top: 6px;
-  }
-
-  /* MODE SELECTOR */
-  #mode-screen {
-    width: 100%;
-    max-width: 720px;
-    animation: fadeUp 0.5s ease;
-  }
-
-  .mode-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  .mode-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-
-  .mode-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(124,58,237,0.2);
-  }
-
-  .mode-card .icon { font-size: 2.2rem; margin-bottom: 10px; }
-  .mode-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-  .mode-card p { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
-
-  .unit-filter {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .unit-filter h3 {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 14px;
-  }
-
-  .unit-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .unit-tag {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-size: 0.78rem;
-    font-family: 'Space Mono', monospace;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--muted);
-  }
-
-  .unit-tag.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-  }
-
-  .start-btn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--accent), #4f46e5);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.25s;
-    letter-spacing: 0.03em;
-  }
-
-  .start-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(124,58,237,0.4);
-  }
-
-  /* QUIZ SCREEN */
-  #quiz-screen { width: 100%; max-width: 720px; display: none; }
-
-  .progress-bar-wrap {
-    background: var(--surface);
-    border-radius: 99px;
-    height: 6px;
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 99px;
-    transition: width 0.4s ease;
-  }
-
-  .quiz-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .quiz-meta span {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
-  .score-badge {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 4px 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent2);
-  }
-
-  .question-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    margin-bottom: 16px;
-    animation: fadeUp 0.35s ease;
-  }
-
-  .unit-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--accent2);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 12px;
-  }
-
-  .question-text {
-    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-    font-weight: 600;
-    line-height: 1.55;
-    color: var(--text);
-  }
-
-  .options-grid {
-    display: grid;
-    gap: 10px;
-  }
-
-  .option-btn {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 18px;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: 'Syne', sans-serif;
-    font-size: 0.9rem;
-    color: var(--text);
-    animation: fadeUp 0.3s ease both;
-  }
-
-  .option-btn:nth-child(1) { animation-delay: 0.05s; }
-  .option-btn:nth-child(2) { animation-delay: 0.1s; }
-  .option-btn:nth-child(3) { animation-delay: 0.15s; }
-  .option-btn:nth-child(4) { animation-delay: 0.2s; }
-
-  .option-btn:hover:not(:disabled) {
-    border-color: var(--accent);
-    background: rgba(124,58,237,0.1);
-    transform: translateX(4px);
-  }
-
-  .option-btn .opt-letter {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    font-weight: 700;
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-
-  .option-btn.correct {
-    background: rgba(16,185,129,0.12);
-    border-color: var(--correct);
-    color: var(--correct);
-  }
-
-  .option-btn.correct .opt-letter {
-    background: var(--correct);
-    border-color: var(--correct);
-    color: white;
-  }
-
-  .option-btn.wrong {
-    background: rgba(239,68,68,0.1);
-    border-color: var(--wrong);
-    color: var(--wrong);
-  }
-
-  .option-btn.wrong .opt-letter {
-    background: var(--wrong);
-    border-color: var(--wrong);
-    color: white;
-  }
-
-  .option-btn:disabled { cursor: default; transform: none !important; }
-
-  .feedback-box {
-    background: var(--surface);
-    border-radius: 12px;
-    padding: 14px 18px;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin-top: 14px;
-    display: none;
-    animation: fadeUp 0.25s ease;
-    border-left: 3px solid var(--correct);
-  }
-
-  .feedback-box.show { display: block; }
-  .feedback-box.wrong-fb { border-left-color: var(--wrong); }
-
-  .nav-row {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-  }
-
-  .nav-btn {
-    flex: 1;
-    padding: 14px;
-    border-radius: 12px;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1.5px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-  }
-
-  .nav-btn.primary {
-    background: linear-gradient(135deg, var(--accent), #4f46e5);
-    border-color: transparent;
-    color: white;
-  }
-
-  .nav-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
-
-  /* FLASHCARD MODE */
-  #flash-screen { width: 100%; max-width: 720px; display: none; }
-
-  .flashcard {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 40px 28px;
-    text-align: center;
-    min-height: 260px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.4s;
-    animation: fadeUp 0.35s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .flashcard::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(124,58,237,0.05), rgba(6,182,212,0.05));
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .flashcard:hover::before { opacity: 1; }
-
-  .flashcard .flip-hint {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .flashcard .fc-unit {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--accent2);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 16px;
-  }
-
-  .flashcard .fc-q {
-    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
-    font-weight: 600;
-    line-height: 1.55;
-  }
-
-  .flashcard .fc-a {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .flashcard.flipped .fc-q { display: none; }
-  .flashcard.flipped .fc-a { display: flex; }
-
-  .answer-pill {
-    background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(6,182,212,0.2));
-    border: 1px solid rgba(16,185,129,0.4);
-    border-radius: 99px;
-    padding: 8px 24px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--correct);
-    font-weight: 700;
-  }
-
-  .answer-options {
-    font-size: 0.82rem;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* RESULT SCREEN */
-  #result-screen {
-    width: 100%;
-    max-width: 720px;
-    display: none;
-    text-align: center;
-    animation: fadeUp 0.5s ease;
-  }
-
-  .result-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 40px 32px;
-    margin-bottom: 20px;
-  }
-
-  .score-ring {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: conic-gradient(var(--accent) var(--pct, 0%), var(--surface) 0%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 24px;
-    position: relative;
-  }
-
-  .score-ring::after {
-    content: '';
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: var(--card);
-  }
-
-  .score-number {
-    position: relative;
-    z-index: 1;
-    font-size: 1.6rem;
-    font-weight: 800;
-    font-family: 'Space Mono', monospace;
-    color: var(--accent2);
-  }
-
-  .result-card h2 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-  }
-
-  .result-card p { color: var(--muted); font-size: 0.85rem; }
-
-  .stats-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 24px;
-  }
-
-  .stat-box {
-    background: var(--surface);
-    border-radius: 12px;
-    padding: 16px;
-  }
-
-  .stat-box .val {
-    font-size: 1.5rem;
-    font-weight: 800;
-    font-family: 'Space Mono', monospace;
-  }
-
-  .stat-box .lbl {
-    font-size: 0.72rem;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-
-  .stat-box.c .val { color: var(--correct); }
-  .stat-box.w .val { color: var(--wrong); }
-
-  .result-actions { display: flex; gap: 12px; }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 480px) {
-    .mode-grid { grid-template-columns: 1fr; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-  }
+:root {
+  --bg:       #0e0e0e;
+  --panel:    #161616;
+  --glass:    rgba(255,255,255,0.04);
+  --border:   rgba(255,255,255,0.08);
+  --amber:    #f5a623;
+  --amber2:   #ffcc60;
+  --green:    #39d98a;
+  --red:      #ff5f5f;
+  --blue:     #5bc8f5;
+  --txt:      #f0ede6;
+  --muted:    #6e6a62;
+  --muted2:   #9e9a92;
+  --nav-w:    260px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;display:flex}
+
+/* SIDEBAR */
+#sidebar{width:var(--nav-w);height:100vh;background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;z-index:100;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.sidebar-logo{padding:28px 24px 20px;border-bottom:1px solid var(--border)}
+.logo-mark{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.06em;color:var(--amber);line-height:1}
+.logo-sub{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-top:4px}
+.nav-section{padding:20px 16px 6px}
+.nav-sec-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:0 8px;margin-bottom:8px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all .18s;color:var(--muted2);font-size:.88rem;font-weight:500;border:1px solid transparent;margin-bottom:2px;position:relative;user-select:none}
+.nav-item:hover{background:var(--glass);color:var(--txt);border-color:var(--border)}
+.nav-item.active{background:rgba(245,166,35,.1);color:var(--amber);border-color:rgba(245,166,35,.25)}
+.nav-item.active::before{content:'';position:absolute;left:-1px;top:20%;bottom:20%;width:3px;background:var(--amber);border-radius:0 3px 3px 0}
+.nav-icon{font-size:.95rem;width:20px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:rgba(245,166,35,.15);color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:.58rem;padding:2px 7px;border-radius:99px;border:1px solid rgba(245,166,35,.2)}
+.nav-divider{height:1px;background:var(--border);margin:10px 16px}
+.unit-filter-nav{padding:0 16px;flex:1;overflow-y:auto}
+.unit-filter-nav::-webkit-scrollbar{width:3px}
+.unit-filter-nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+.unit-btn{display:flex;align-items:center;gap:10px;width:100%;padding:8px 12px;border-radius:7px;cursor:pointer;transition:all .18s;color:var(--muted2);font-size:.8rem;font-weight:400;border:1px solid transparent;margin-bottom:2px;background:none;text-align:left;font-family:'DM Sans',sans-serif}
+.unit-btn:hover{background:var(--glass);color:var(--txt)}
+.unit-btn.active{background:rgba(91,200,245,.08);color:var(--blue);border-color:rgba(91,200,245,.2)}
+.unit-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .2s}
+.unit-btn.active .unit-dot{background:var(--blue);box-shadow:0 0 6px var(--blue)}
+.sidebar-footer{padding:16px;border-top:1px solid var(--border)}
+.score-summary{background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:14px}
+.ss-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-bottom:8px}
+.score-row{display:flex;justify-content:space-between;margin-bottom:4px;align-items:center}
+.score-row span:first-child{font-size:.78rem;color:var(--muted2)}
+.score-row span:last-child{font-family:'IBM Plex Mono',monospace;font-size:.78rem}
+.sc{color:var(--green)}.sw{color:var(--red)}.st{color:var(--amber)}
+
+/* HAMBURGER */
+#hamburger{display:none;position:fixed;top:16px;left:16px;z-index:200;background:var(--panel);border:1px solid var(--border);border-radius:8px;width:40px;height:40px;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:5px}
+#hamburger span{width:20px;height:2px;background:var(--amber);border-radius:2px;transition:all .25s}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;backdrop-filter:blur(2px)}
+
+/* MAIN */
+#main{margin-left:var(--nav-w);flex:1;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+#main::-webkit-scrollbar{width:5px}
+#main::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+
+/* TOPBAR */
+#topbar{padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--panel);position:sticky;top:0;z-index:50;gap:12px}
+.topbar-title{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.08em;color:var(--txt);flex-shrink:0}
+.topbar-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mode-toggle{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.mode-toggle-btn{padding:7px 16px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .18s;color:var(--muted2);border:none;background:none;font-family:'DM Sans',sans-serif}
+.mode-toggle-btn.active{background:var(--amber);color:#0e0e0e}
+.start-new-btn{padding:8px 18px;background:var(--amber);color:#0e0e0e;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+.start-new-btn:hover{background:var(--amber2);transform:translateY(-1px)}
+
+/* SCREENS */
+.screen{padding:28px 32px;display:none;animation:screenIn .3s ease}
+.screen.active{display:block}
+@keyframes screenIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* HOME */
+.home-hero{background:linear-gradient(135deg,rgba(245,166,35,.08),rgba(91,200,245,.05));border:1px solid var(--border);border-radius:16px;padding:40px;margin-bottom:24px;position:relative;overflow:hidden}
+.home-hero::after{content:'MCQ';position:absolute;right:-10px;top:-20px;font-family:'Bebas Neue',sans-serif;font-size:8rem;color:rgba(245,166,35,.05);line-height:1;pointer-events:none}
+.home-hero h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:.05em;line-height:1.1;margin-bottom:10px}
+.home-hero h2 span{color:var(--amber)}
+.home-hero p{color:var(--muted2);font-size:.9rem;line-height:1.6;max-width:480px;margin-bottom:24px}
+.hero-stats{display:flex;gap:28px;flex-wrap:wrap}
+.hstat .val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--amber);line-height:1}
+.hstat .lbl{font-size:.65rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px}
+.mode-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px 22px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.mode-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .22s}
+.mode-card.quiz-card::before{background:radial-gradient(circle at 0% 0%,rgba(245,166,35,.12),transparent 70%)}
+.mode-card.flash-card::before{background:radial-gradient(circle at 0% 0%,rgba(91,200,245,.1),transparent 70%)}
+.mode-card:hover{border-color:rgba(245,166,35,.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.mode-card:hover::before{opacity:1}
+.mc-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:14px}
+.quiz-card .mc-icon{background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.2)}
+.flash-card .mc-icon{background:rgba(91,200,245,.1);border:1px solid rgba(91,200,245,.2)}
+.mode-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.mode-card p{font-size:.8rem;color:var(--muted2);line-height:1.5;margin-bottom:16px}
+.mc-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .18s}
+.quiz-card .mc-btn{background:var(--amber);color:#0e0e0e}
+.flash-card .mc-btn{background:var(--blue);color:#0e0e0e}
+.mc-btn:hover{opacity:.85}
+.unit-overview{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px}
+.sec-head{font-family:'IBM Plex Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);margin-bottom:14px}
+.unit-rows{display:grid;gap:8px}
+.unit-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .18s}
+.unit-row:hover{border-color:rgba(245,166,35,.25)}
+.ur-color{width:4px;align-self:stretch;border-radius:2px;flex-shrink:0}
+.ur-name{font-size:.86rem;font-weight:600}
+.ur-sub{font-size:.72rem;color:var(--muted2);margin-top:2px}
+.ur-count{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);background:var(--panel);padding:3px 10px;border-radius:99px;border:1px solid var(--border);margin-left:auto;flex-shrink:0}
+
+/* QUIZ */
+.quiz-toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+.qi-label{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.qi-progress{display:flex;align-items:center;gap:10px}
+.qi-num{font-family:'IBM Plex Mono',monospace;font-size:.88rem;color:var(--amber);font-weight:600}
+.pbar-wrap{width:130px;height:4px;background:var(--border);border-radius:99px;overflow:hidden}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.score-chips{display:flex;gap:8px}
+.chip{padding:5px 12px;border-radius:99px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;border:1px solid;display:flex;align-items:center;gap:5px}
+.chip.correct{background:rgba(57,217,138,.08);color:var(--green);border-color:rgba(57,217,138,.2)}
+.chip.wrong{background:rgba(255,95,95,.08);color:var(--red);border-color:rgba(255,95,95,.2)}
+.q-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:30px;margin-bottom:16px;position:relative;overflow:hidden}
+.q-card .qnum-bg{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(245,166,35,.07);position:absolute;right:20px;top:10px;line-height:1;user-select:none}
+.unit-tag{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(91,200,245,.08);border:1px solid rgba(91,200,245,.18);border-radius:99px;font-family:'IBM Plex Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);margin-bottom:14px}
+.q-text{font-size:clamp(.95rem,2.5vw,1.15rem);font-weight:500;line-height:1.6;color:var(--txt);max-width:90%}
+.options-list{display:grid;gap:10px;margin-bottom:14px}
+.opt{display:flex;align-items:center;gap:14px;padding:13px 16px;background:var(--panel);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all .18s;text-align:left;width:100%;font-family:'DM Sans',sans-serif;color:var(--txt);animation:optIn .25s ease both}
+.opt:nth-child(1){animation-delay:.04s}.opt:nth-child(2){animation-delay:.08s}.opt:nth-child(3){animation-delay:.12s}.opt:nth-child(4){animation-delay:.16s}
+@keyframes optIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.opt:hover:not(:disabled){border-color:rgba(245,166,35,.4);background:rgba(245,166,35,.04);transform:translateX(5px)}
+.opt:disabled{cursor:default;transform:none!important}
+.opt-letter{width:30px;height:30px;border-radius:7px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;color:var(--muted2);flex-shrink:0;transition:all .18s}
+.opt-text{font-size:.88rem;line-height:1.4}
+.opt.correct{background:rgba(57,217,138,.08);border-color:var(--green)}
+.opt.correct .opt-letter{background:var(--green);border-color:var(--green);color:#0e0e0e}
+.opt.correct .opt-text{color:var(--green)}
+.opt.wrong{background:rgba(255,95,95,.08);border-color:var(--red)}
+.opt.wrong .opt-letter{background:var(--red);border-color:var(--red);color:#fff}
+.opt.wrong .opt-text{color:var(--red)}
+.feedback{display:none;padding:13px 16px;border-radius:10px;font-size:.84rem;line-height:1.5;margin-bottom:16px;animation:optIn .2s ease}
+.feedback.show{display:block}
+.feedback.correct{background:rgba(57,217,138,.08);border:1px solid rgba(57,217,138,.25);color:var(--green)}
+.feedback.wrong{background:rgba(255,95,95,.08);border:1px solid rgba(255,95,95,.25);color:var(--red)}
+.quiz-nav{display:flex;align-items:center;gap:10px}
+.qnav-btn{padding:11px 20px;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;transition:all .18s;border:1.5px solid var(--border);background:var(--panel);color:var(--muted2)}
+.qnav-btn:hover:not(:disabled){border-color:var(--amber);color:var(--amber)}
+.qnav-btn:disabled{opacity:.3;cursor:not-allowed}
+.qnav-btn.primary{background:var(--amber);color:#0e0e0e;border-color:var(--amber);padding:11px 26px}
+.qnav-btn.primary:hover{background:var(--amber2);border-color:var(--amber2);color:#0e0e0e}
+.q-dots{flex:1;display:flex;flex-wrap:wrap;gap:5px;padding:0 4px;max-height:52px;overflow:hidden}
+.q-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .15s;border:none;flex-shrink:0}
+.q-dot.current{background:var(--amber);transform:scale(1.4)}
+.q-dot.ans-c{background:var(--green)}
+.q-dot.ans-w{background:var(--red)}
+
+/* FLASHCARD */
+.fc-toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--muted2)}
+.fc-counter strong{color:var(--amber)}
+.flashcard{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:56px 40px;min-height:290px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;transition:box-shadow .25s,transform .25s,border-color .3s,background .3s;position:relative;overflow:hidden;margin-bottom:18px}
+.flashcard::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(245,166,35,.08),transparent 70%);pointer-events:none}
+.flashcard:hover{box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(-3px)}
+.fc-hint{position:absolute;top:18px;right:20px;font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.15em}
+.fc-unit-badge{position:absolute;top:18px;left:20px;padding:3px 10px;background:rgba(91,200,245,.08);border:1px solid rgba(91,200,245,.18);border-radius:99px;font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--blue);text-transform:uppercase;letter-spacing:.12em}
+.fc-front{width:100%}
+.fc-back{display:none;flex-direction:column;align-items:center;gap:14px;width:100%}
+.flashcard.flipped .fc-front{display:none}
+.flashcard.flipped .fc-back{display:flex}
+.flashcard.flipped{border-color:rgba(57,217,138,.2);background:linear-gradient(135deg,var(--panel),rgba(57,217,138,.03))}
+.fc-q-text{font-size:clamp(1rem,2.5vw,1.2rem);font-weight:500;line-height:1.6;color:var(--txt)}
+.fc-answer-pill{background:rgba(57,217,138,.12);border:1px solid rgba(57,217,138,.3);color:var(--green);padding:10px 28px;border-radius:99px;font-weight:700;font-size:1rem}
+.fc-all-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:480px}
+.fc-opt{padding:8px 12px;border-radius:8px;font-size:.78rem;background:var(--bg);border:1px solid var(--border);color:var(--muted2);text-align:left}
+.fc-opt.is-answer{background:rgba(57,217,138,.08);border-color:rgba(57,217,138,.3);color:var(--green);font-weight:600}
+.fc-letters{color:var(--muted);margin-right:4px;font-family:'IBM Plex Mono',monospace;font-size:.7rem}
+.fc-nav-row{display:flex;align-items:center;gap:10px}
+
+/* RESULT */
+.result-wrap{max-width:580px;margin:0 auto}
+.result-hero{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:44px 36px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden}
+.result-ring{width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;position:relative}
+.result-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--amber);position:relative;z-index:1}
+.result-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.05em;margin-bottom:8px}
+.result-sub{color:var(--muted2);font-size:.88rem;margin-bottom:28px}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rs{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 10px}
+.rs .rv{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;margin-bottom:4px}
+.rs .rl{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.rs.c .rv{color:var(--green)}.rs.w .rv{color:var(--red)}.rs.t .rv{color:var(--amber)}
+.result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}
+  #hamburger{display:flex}
+  #overlay.show{display:block}
+  #main{margin-left:0}
+  #topbar{padding:14px 16px 14px 64px}
+  .screen{padding:20px 16px}
+  .home-hero{padding:26px 20px}
+  .q-card{padding:22px 18px}
+  .q-text{max-width:100%}
+  .q-dots{display:none}
+  .fc-all-opts{grid-template-columns:1fr}
+  .flashcard{padding:44px 20px 32px;min-height:250px}
+  .result-stats{grid-template-columns:1fr 1fr}
+  .rs.t{grid-column:span 2}
+  .result-hero{padding:32px 22px}
+}
+@media(max-width:480px){
+  .cards-grid{grid-template-columns:1fr}
+  .topbar-right{gap:6px}
+  .mode-toggle-btn{padding:7px 10px;font-size:.72rem}
+  .start-new-btn{padding:7px 12px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>⚡ AI Tools MCQ</h1>
-  <p>UNIT I–IV · 130 QUESTIONS · EXAM PREP</p>
-</header>
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">AI TOOLS</div>
+    <div class="logo-sub">MCQ Practice Suite</div>
+  </div>
 
-<!-- MODE SCREEN -->
-<div id="mode-screen">
-  <div class="mode-grid">
-    <div class="mode-card" onclick="startMode('quiz')">
-      <div class="icon">🧠</div>
-      <h3>Quiz Mode</h3>
-      <p>Answer MCQs with instant feedback and score tracking</p>
+  <div class="nav-section">
+    <div class="nav-sec-label">Pages</div>
+    <div class="nav-item active" data-screen="home" onclick="navTo('home',this)">
+      <span class="nav-icon">⌂</span> Home
     </div>
-    <div class="mode-card" onclick="startMode('flash')">
-      <div class="icon">🃏</div>
-      <h3>Flashcard Mode</h3>
-      <p>Flip cards to reveal answers — great for quick review</p>
+    <div class="nav-item" data-screen="quiz" onclick="startMode('quiz')">
+      <span class="nav-icon">🧠</span> Quiz Mode
+      <span class="nav-badge">MCQ</span>
+    </div>
+    <div class="nav-item" data-screen="flash" onclick="startMode('flash')">
+      <span class="nav-icon">🃏</span> Flashcards
+    </div>
+    <div class="nav-item" data-screen="result" id="result-nav" onclick="navTo('result',this)" style="display:none">
+      <span class="nav-icon">📊</span> Last Result
     </div>
   </div>
 
-  <div class="unit-filter">
-    <h3>Filter by Unit</h3>
-    <div class="unit-tags">
-      <span class="unit-tag active" data-unit="all" onclick="toggleUnit(this)">All Units</span>
-      <span class="unit-tag" data-unit="Unit I" onclick="toggleUnit(this)">Unit I — Intro</span>
-      <span class="unit-tag" data-unit="Unit II" onclick="toggleUnit(this)">Unit II — Visual Design</span>
-      <span class="unit-tag" data-unit="Unit III" onclick="toggleUnit(this)">Unit III — Automation</span>
-      <span class="unit-tag" data-unit="Unit IV" onclick="toggleUnit(this)">Unit IV — Resume & Portfolio</span>
-      <span class="unit-tag" data-unit="CO" onclick="toggleUnit(this)">CO & Practicals</span>
-      <span class="unit-tag" data-unit="Mixed" onclick="toggleUnit(this)">Mixed MCQs</span>
-    </div>
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-sec-label">Filter Unit</div>
   </div>
 
-  <button class="start-btn" onclick="launchSelected()">Start Practice →</button>
+  <div class="unit-filter-nav">
+    <button class="unit-btn active" data-unit="all" onclick="selectUnit(this)">
+      <span class="unit-dot"></span> All Units
+    </button>
+    <button class="unit-btn" data-unit="Unit I" onclick="selectUnit(this)">
+      <span class="unit-dot"></span> Unit I — Intro
+    </button>
+    <button class="unit-btn" data-unit="Unit II" onclick="selectUnit(this)">
+      <span class="unit-dot"></span> Unit II — Visual Design
+    </button>
+    <button class="unit-btn" data-unit="Unit III" onclick="selectUnit(this)">
+      <span class="unit-dot"></span> Unit III — Automation
+    </button>
+    <button class="unit-btn" data-unit="Unit IV" onclick="selectUnit(this)">
+      <span class="unit-dot"></span> Unit IV — Portfolio
+    </button>
+    <button class="unit-btn" data-unit="CO" onclick="selectUnit(this)">
+      <span class="unit-dot"></span> CO &amp; Practicals
+    </button>
+    <button class="unit-btn" data-unit="Mixed" onclick="selectUnit(this)">
+      <span class="unit-dot"></span> Mixed MCQs
+    </button>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="score-summary">
+      <div class="ss-label">Session Stats</div>
+      <div class="score-row"><span>Correct</span><span class="sc" id="sb-c">0</span></div>
+      <div class="score-row"><span>Wrong</span><span class="sw" id="sb-w">0</span></div>
+      <div class="score-row"><span>Attempted</span><span class="st" id="sb-t">0</span></div>
+    </div>
+  </div>
+</nav>
+
+<div id="hamburger" onclick="toggleSidebar()">
+  <span></span><span></span><span></span>
 </div>
+<div id="overlay" onclick="closeSidebar()"></div>
 
-<!-- QUIZ SCREEN -->
-<div id="quiz-screen">
-  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
-  <div class="quiz-meta">
-    <span id="q-counter">Q 1 / 30</span>
-    <span class="score-badge" id="score-badge">Score: 0</span>
-  </div>
-  <div class="question-card">
-    <div class="unit-label" id="q-unit"></div>
-    <div class="question-text" id="q-text"></div>
-  </div>
-  <div class="options-grid" id="options-grid"></div>
-  <div class="feedback-box" id="feedback-box"></div>
-  <div class="nav-row">
-    <button class="nav-btn" id="prev-btn" onclick="prevQ()">← Prev</button>
-    <button class="nav-btn primary" id="next-btn" onclick="nextQ()">Next →</button>
-  </div>
-</div>
-
-<!-- FLASHCARD SCREEN -->
-<div id="flash-screen">
-  <div class="quiz-meta">
-    <span id="fc-counter">Card 1 / 30</span>
-    <span class="score-badge">Tap card to flip</span>
-  </div>
-  <div class="flashcard" id="flashcard" onclick="flipCard()">
-    <span class="flip-hint">tap to flip</span>
-    <div class="fc-unit" id="fc-unit"></div>
-    <div class="fc-q" id="fc-q"></div>
-    <div class="fc-a" id="fc-a">
-      <div class="answer-pill" id="fc-answer"></div>
-      <div class="answer-options" id="fc-opts"></div>
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <div class="topbar-title" id="topbar-title">OVERVIEW</div>
+    <div class="topbar-right">
+      <div class="mode-toggle">
+        <button class="mode-toggle-btn active" id="btn-quiz" onclick="setMode('quiz')">Quiz</button>
+        <button class="mode-toggle-btn" id="btn-flash" onclick="setMode('flash')">Flashcard</button>
+      </div>
+      <button class="start-new-btn" onclick="startCurrent()">Start →</button>
     </div>
   </div>
-  <div class="nav-row" style="margin-top:16px;">
-    <button class="nav-btn" onclick="fcNav(-1)">← Prev</button>
-    <button class="nav-btn primary" onclick="fcNav(1)">Next →</button>
-  </div>
-  <div class="nav-row">
-    <button class="nav-btn" onclick="showModeScreen()">↩ Back</button>
-  </div>
-</div>
 
-<!-- RESULT SCREEN -->
-<div id="result-screen">
-  <div class="result-card">
-    <div class="score-ring" id="score-ring">
-      <div class="score-number" id="final-pct">0%</div>
+  <!-- HOME -->
+  <div id="screen-home" class="screen active">
+    <div class="home-hero">
+      <h2>MASTER <span>AI TOOLS</span><br>MCQ PREP</h2>
+      <p>130 questions across 4 units + mixed sets. Quiz mode with live scoring or flashcard mode for rapid review.</p>
+      <div class="hero-stats">
+        <div class="hstat"><div class="val">130</div><div class="lbl">Questions</div></div>
+        <div class="hstat"><div class="val">4</div><div class="lbl">Units</div></div>
+        <div class="hstat"><div class="val">2</div><div class="lbl">Modes</div></div>
+        <div class="hstat"><div class="val">∞</div><div class="lbl">Retries</div></div>
+      </div>
     </div>
-    <h2 id="result-title"></h2>
-    <p id="result-sub"></p>
-    <div class="stats-row">
-      <div class="stat-box c"><div class="val" id="r-correct">0</div><div class="lbl">Correct</div></div>
-      <div class="stat-box w"><div class="val" id="r-wrong">0</div><div class="lbl">Wrong</div></div>
+
+    <div class="cards-grid">
+      <div class="mode-card quiz-card" onclick="startMode('quiz')">
+        <div class="mc-icon">🧠</div>
+        <h3>Quiz Mode</h3>
+        <p>Answer MCQs with instant feedback, score tracking, and per-question navigation.</p>
+        <button class="mc-btn" onclick="event.stopPropagation();startMode('quiz')">Start Quiz →</button>
+      </div>
+      <div class="mode-card flash-card" onclick="startMode('flash')">
+        <div class="mc-icon">🃏</div>
+        <h3>Flashcard Mode</h3>
+        <p>Tap to flip cards and reveal the correct answer — perfect for last-minute revision.</p>
+        <button class="mc-btn" onclick="event.stopPropagation();startMode('flash')">Start Flashcards →</button>
+      </div>
+    </div>
+
+    <div class="unit-overview">
+      <div class="sec-head">Units at a Glance</div>
+      <div class="unit-rows">
+        <div class="unit-row" onclick="quickStart('Unit I')">
+          <div class="ur-color" style="background:var(--amber)"></div>
+          <div><div class="ur-name">Unit I — Introduction to AI Tools</div><div class="ur-sub">Grammarly · NotepadAI · Grok · Academic Use</div></div>
+          <div class="ur-count">20 Qs</div>
+        </div>
+        <div class="unit-row" onclick="quickStart('Unit II')">
+          <div class="ur-color" style="background:var(--blue)"></div>
+          <div><div class="ur-name">Unit II — Visual &amp; Content Design</div><div class="ur-sub">Canva · Copy.ai · Magic Write · Infographics</div></div>
+          <div class="ur-count">15 Qs</div>
+        </div>
+        <div class="unit-row" onclick="quickStart('Unit III')">
+          <div class="ur-color" style="background:var(--green)"></div>
+          <div><div class="ur-name">Unit III — Automation &amp; Code</div><div class="ur-sub">GitHub Copilot · Pictory.ai · ELI5.ai · Claude</div></div>
+          <div class="ur-count">15 Qs</div>
+        </div>
+        <div class="unit-row" onclick="quickStart('Unit IV')">
+          <div class="ur-color" style="background:#c084fc"></div>
+          <div><div class="ur-name">Unit IV — Resume &amp; Portfolio</div><div class="ur-sub">Resume.io · Gama · Presentations · Portfolios</div></div>
+          <div class="ur-count">10 Qs</div>
+        </div>
+        <div class="unit-row" onclick="quickStart('CO')">
+          <div class="ur-color" style="background:#fb923c"></div>
+          <div><div class="ur-name">CO &amp; Practicals</div><div class="ur-sub">Course Outcomes · Weekly practicals</div></div>
+          <div class="ur-count">10 Qs</div>
+        </div>
+        <div class="unit-row" onclick="quickStart('Mixed')">
+          <div class="ur-color" style="background:var(--red)"></div>
+          <div><div class="ur-name">Mixed Important MCQs</div><div class="ur-sub">Cross-unit rapid-fire questions</div></div>
+          <div class="ur-count">30 Qs</div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="result-actions">
-    <button class="nav-btn" onclick="showModeScreen()">↩ Home</button>
-    <button class="nav-btn primary" onclick="restartQuiz()">🔁 Retry</button>
+
+  <!-- QUIZ -->
+  <div id="screen-quiz" class="screen">
+    <div class="quiz-toprow">
+      <div>
+        <div class="qi-label">Question</div>
+        <div class="qi-progress">
+          <div class="qi-num" id="qi-num">1 / 30</div>
+          <div class="pbar-wrap"><div class="pbar-fill" id="pbar"></div></div>
+        </div>
+      </div>
+      <div class="score-chips">
+        <div class="chip correct">✓ <span id="chip-c">0</span></div>
+        <div class="chip wrong">✗ <span id="chip-w">0</span></div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="qnum-bg" id="qnum-bg">01</div>
+      <div class="unit-tag" id="q-unit">Unit I</div>
+      <div class="q-text" id="q-text"></div>
+    </div>
+
+    <div class="options-list" id="options-list"></div>
+    <div class="feedback" id="feedback"></div>
+
+    <div class="quiz-nav">
+      <button class="qnav-btn" id="prev-btn" onclick="prevQ()">← Prev</button>
+      <div class="q-dots" id="q-dots"></div>
+      <button class="qnav-btn primary" id="next-btn" onclick="nextQ()">Next →</button>
+    </div>
+  </div>
+
+  <!-- FLASHCARD -->
+  <div id="screen-flash" class="screen">
+    <div class="fc-toprow">
+      <div class="fc-counter">Card <strong id="fc-num">1</strong> of <strong id="fc-total">30</strong></div>
+      <div class="score-chips"><div class="chip correct" style="font-size:.7rem">Tap card to flip</div></div>
+    </div>
+
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-hint">↩ flip</div>
+      <div class="fc-unit-badge" id="fc-unit">Unit I</div>
+      <div class="fc-front"><div class="fc-q-text" id="fc-q"></div></div>
+      <div class="fc-back" id="fc-back">
+        <div class="fc-answer-pill" id="fc-answer"></div>
+        <div class="fc-all-opts" id="fc-opts"></div>
+      </div>
+    </div>
+
+    <div class="pbar-wrap" style="width:100%;margin-bottom:16px">
+      <div class="pbar-fill" id="fc-pbar"></div>
+    </div>
+
+    <div class="fc-nav-row">
+      <button class="qnav-btn" onclick="fcNav(-1)">← Prev</button>
+      <div style="flex:1"></div>
+      <button class="qnav-btn primary" onclick="fcNav(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="screen-result" class="screen">
+    <div class="result-wrap">
+      <div class="result-hero">
+        <div class="result-ring">
+          <svg viewBox="0 0 130 130" width="130" height="130">
+            <circle cx="65" cy="65" r="56" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+            <circle id="ring-circle" cx="65" cy="65" r="56" fill="none" stroke="var(--amber)" stroke-width="8"
+              stroke-linecap="round" stroke-dasharray="351.9" stroke-dashoffset="351.9"
+              style="transition:stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1)"/>
+          </svg>
+          <div class="ring-num" id="ring-pct">0%</div>
+        </div>
+        <div class="result-title" id="res-title">WELL DONE</div>
+        <div class="result-sub" id="res-sub">You completed the quiz!</div>
+        <div class="result-stats">
+          <div class="rs c"><div class="rv" id="res-c">0</div><div class="rl">Correct</div></div>
+          <div class="rs w"><div class="rv" id="res-w">0</div><div class="rl">Wrong</div></div>
+          <div class="rs t"><div class="rv" id="res-t">0</div><div class="rl">Total</div></div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="qnav-btn" onclick="navTo('home',document.querySelector('[data-screen=home]'))">↩ Home</button>
+        <button class="qnav-btn primary" onclick="restartQuiz()">🔁 Try Again</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-const ALL_QUESTIONS = [
-  // UNIT I
-  {unit:"Unit I",q:"What is the main purpose of AI tools in academics?",opts:["Increase manual work","Reduce productivity","Enhance learning and automation","Replace textbooks completely"],ans:2},
-  {unit:"Unit I",q:"Which AI tool is designed for writing, summarizing, and organizing content?",opts:["Canva","Grammarly","NotepadAI","Resume.io"],ans:2},
-  {unit:"Unit I",q:"Grammarly is mainly used for:",opts:["Coding","Grammar and spelling correction","Video creation","Resume building"],ans:1},
-  {unit:"Unit I",q:"Grok is useful for:",opts:["Designing posters","Real-time explanations and quick answers","Creating resumes","Editing videos"],ans:1},
-  {unit:"Unit I",q:"Which tool helps improve tone and clarity in writing?",opts:["Grammarly","Pictory.ai","Gama","Resume.io"],ans:0},
-  {unit:"Unit I",q:"AI tools help students mainly by:",opts:["Making work slower","Increasing complexity","Saving time and effort","Replacing teachers"],ans:2},
-  {unit:"Unit I",q:"NotepadAI is best for:",opts:["Making presentations","Summarizing notes","Coding","Video generation"],ans:1},
-  {unit:"Unit I",q:"Grammarly can suggest improvements in:",opts:["Tone","Clarity","Grammar","All of these"],ans:3},
-  {unit:"Unit I",q:"Grok is an example of:",opts:["AI assistant","Video editor","Coding IDE","Graphic tool"],ans:0},
-  {unit:"Unit I",q:"Which of the following is a benefit of AI tools?",opts:["More repetitive work","Better productivity","More confusion","Less organization"],ans:1},
-  {unit:"Unit I",q:"AI tools can be used in:",opts:["Academics only","Industry only","Both academics and industry","Entertainment only"],ans:2},
-  {unit:"Unit I",q:"Which tool is most useful for proofreading assignments?",opts:["Canva","Grammarly","Claude","Pictory.ai"],ans:1},
-  {unit:"Unit I",q:"What kind of content can NotepadAI generate?",opts:["Summaries","Notes","Organized content","All of these"],ans:3},
-  {unit:"Unit I",q:"Grok can simplify:",opts:["Difficult topics","Easy topics","Only coding","Only grammar"],ans:0},
-  {unit:"Unit I",q:"Which tool gives real-time grammar correction?",opts:["Copy.ai","Grammarly","Resume.io","Pictory.ai"],ans:1},
-  {unit:"Unit I",q:"AI-based tools are useful for:",opts:["Automation","Productivity","Learning","All of these"],ans:3},
-  {unit:"Unit I",q:"The main feature of NotepadAI is:",opts:["Resume generation","Content organization","Video editing","Poster design"],ans:1},
-  {unit:"Unit I",q:"Which AI tool is ideal for improving academic reports?",opts:["Grammarly","Pictory.ai","Resume.io","Canva"],ans:0},
-  {unit:"Unit I",q:"AI tools reduce:",opts:["Efficiency","Accuracy","Manual effort","Creativity"],ans:2},
-  {unit:"Unit I",q:"Grok helps in:",opts:["Complex coding only","Quick explanations","Video creation","Resume building"],ans:1},
-  // UNIT II
-  {unit:"Unit II",q:"Canva is mainly used for:",opts:["Coding","Visual design","Database management","Cybersecurity"],ans:1},
-  {unit:"Unit II",q:"Which Canva feature helps generate written content?",opts:["Magic Write","Smart Paint","AI Draw","Code Assist"],ans:0},
-  {unit:"Unit II",q:"Canva can be used to create:",opts:["Posters","Infographics","Presentations","All of these"],ans:3},
-  {unit:"Unit II",q:"Copy.ai is useful for:",opts:["Coding","Blog generation","Resume design","Video editing"],ans:1},
-  {unit:"Unit II",q:"AI-assisted creativity mainly improves:",opts:["Communication through visuals","Coding","Networking","Security"],ans:0},
-  {unit:"Unit II",q:"Which tool is best for creating resumes visually?",opts:["Canva","Grammarly","Grok","ELI5.ai"],ans:0},
-  {unit:"Unit II",q:"Copy.ai can generate:",opts:["Blog introductions","Assignment drafts","Project descriptions","All of these"],ans:3},
-  {unit:"Unit II",q:"Canva templates are useful because they:",opts:["Save time","Improve design quality","Are easy to customize","All of these"],ans:3},
-  {unit:"Unit II",q:"Which tool is used for classroom presentations?",opts:["Canva","GitHub Copilot","Resume.io","Pictory.ai"],ans:0},
-  {unit:"Unit II",q:"Copy.ai mainly focuses on:",opts:["Content generation","Coding","Grammar checking","Video conversion"],ans:0},
-  {unit:"Unit II",q:"Canva helps in:",opts:["Branding","Poster design","Resume creation","All of these"],ans:3},
-  {unit:"Unit II",q:"Which AI tool can generate assignment drafts?",opts:["Canva","Copy.ai","Grammarly","Resume.io"],ans:1},
-  {unit:"Unit II",q:"Canva's AI templates help users by:",opts:["Increasing work","Reducing creativity","Making design faster","Adding errors"],ans:2},
-  {unit:"Unit II",q:"Which of these is not mainly a visual design tool?",opts:["Canva","Copy.ai","Grammarly","Magic Write"],ans:2},
-  {unit:"Unit II",q:"AI visuals are important because they:",opts:["Improve communication","Make content attractive","Increase understanding","All of these"],ans:3},
-  // UNIT III
-  {unit:"Unit III",q:"Pictory.ai is used for:",opts:["Resume making","Converting text into videos","Coding","Grammar correction"],ans:1},
-  {unit:"Unit III",q:"GitHub Copilot is mainly used for:",opts:["Code suggestions","Video editing","Poster design","Resume formatting"],ans:0},
-  {unit:"Unit III",q:"ELI5.ai stands for:",opts:["Explain Logic in 5 steps","ExplainLikeImFive","Explain Learning in Five","Easy Logic Interface 5"],ans:1},
-  {unit:"Unit III",q:"Claude is useful for:",opts:["Summarization","Coding support","Research help","All of these"],ans:3},
-  {unit:"Unit III",q:"Which tool converts blog posts into videos?",opts:["Canva","Pictory.ai","Grok","Resume.io"],ans:1},
-  {unit:"Unit III",q:"GitHub Copilot works inside:",opts:["Web browser only","IDEs like VS Code","Mobile apps only","Canva"],ans:1},
-  {unit:"Unit III",q:"ELI5.ai is useful because it:",opts:["Makes coding difficult","Simplifies complex topics","Designs posters","Creates resumes"],ans:1},
-  {unit:"Unit III",q:"Claude can help in:",opts:["Coding","Writing","Research","All of these"],ans:3},
-  {unit:"Unit III",q:"GitHub Copilot provides:",opts:["Code explanations","Code suggestions","Auto-completion","All of these"],ans:3},
-  {unit:"Unit III",q:"Pictory.ai is helpful for:",opts:["Digital portfolios","Presentations","Video content","All of these"],ans:3},
-  {unit:"Unit III",q:"Which tool is best for explaining algorithms simply?",opts:["ELI5.ai","Canva","Resume.io","Grammarly"],ans:0},
-  {unit:"Unit III",q:"Claude is an example of:",opts:["AI assistant","Video maker","Design software","Resume editor"],ans:0},
-  {unit:"Unit III",q:"Which tool is most useful for fixing code errors?",opts:["GitHub Copilot","Canva","Resume.io","Copy.ai"],ans:0},
-  {unit:"Unit III",q:"Pictory.ai mainly supports:",opts:["Text-to-video conversion","Resume generation","Poster making","Grammar correction"],ans:0},
-  {unit:"Unit III",q:"ELI5.ai helps students by:",opts:["Simplifying theoretical concepts","Making diagrams","Editing resumes","Writing code automatically"],ans:0},
-  // UNIT IV
-  {unit:"Unit IV",q:"Resume.io is mainly used for:",opts:["Resume creation","Coding","Grammar correction","Poster making"],ans:0},
-  {unit:"Unit IV",q:"Gama is used for:",opts:["AI-powered presentations","Database design","Video editing","Coding"],ans:0},
-  {unit:"Unit IV",q:"Resume.io can generate:",opts:["Cover letters","Resumes","Portfolios","All of these"],ans:3},
-  {unit:"Unit IV",q:"Gama converts text into:",opts:["Spreadsheets","Slides and reports","Videos","Code"],ans:1},
-  {unit:"Unit IV",q:"Which tool is best for building a professional portfolio?",opts:["Resume.io","Grammarly","Grok","ELI5.ai"],ans:0},
-  {unit:"Unit IV",q:"Gama helps users create:",opts:["Webpages","Presentations","Reports","All of these"],ans:3},
-  {unit:"Unit IV",q:"Resume.io provides:",opts:["Smart formatting","AI-generated resumes","Cover letters","All of these"],ans:3},
-  {unit:"Unit IV",q:"Which tool is useful for making visually appealing slides?",opts:["Gama","GitHub Copilot","Grammarly","Pictory.ai"],ans:0},
-  {unit:"Unit IV",q:"Resume.io helps improve:",opts:["Career readiness","Presentation skills","Coding ability","Video editing"],ans:0},
-  {unit:"Unit IV",q:"Gama is best described as:",opts:["AI-powered presentation tool","Grammar tool","Coding assistant","Note-taking app"],ans:0},
-  // CO
-  {unit:"CO",q:"CO1 is related to:",opts:["Productivity and academic use of AI","Resume design","Coding only","Video generation"],ans:0},
-  {unit:"CO",q:"CO2 is related to:",opts:["AI-based content and visual design","Coding only","Database systems","Networking"],ans:0},
-  {unit:"CO",q:"CO3 focuses on:",opts:["Task automation and code assistance","Resume making only","Grammar only","Poster design only"],ans:0},
-  {unit:"CO",q:"CO4 is mainly about:",opts:["Productivity workflows and resumes","Coding only","Grammar correction","Video creation"],ans:0},
-  {unit:"CO",q:"Which practical exercise uses Grammarly?",opts:["Design a poster","Proofread an assignment","Convert blog to video","Make a resume"],ans:1},
-  {unit:"CO",q:"Which tool is used to generate a study plan?",opts:["NotepadAI","Gama","Canva","Pictory.ai"],ans:0},
-  {unit:"CO",q:"Which practical involves creating a poster?",opts:["Week 4","Week 2","Week 7","Week 10"],ans:0},
-  {unit:"CO",q:"Which week involves using GitHub Copilot?",opts:["Week 3","Week 7","Week 10","Week 11"],ans:1},
-  {unit:"CO",q:"Which week focuses on AI-generated resumes?",opts:["Week 10","Week 4","Week 2","Week 1"],ans:0},
-  {unit:"CO",q:"Which week involves using Gama?",opts:["Week 6","Week 11","Week 4","Week 8"],ans:1},
-  // MIXED
-  {unit:"Mixed",q:"Which tool is best for quick explanations?",opts:["Grok","Canva","Resume.io","Pictory.ai"],ans:0},
-  {unit:"Mixed",q:"Which tool is ideal for code auto-completion?",opts:["GitHub Copilot","Copy.ai","Canva","Gama"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is useful for making infographics?",opts:["Canva","Grammarly","Claude","Resume.io"],ans:0},
-  {unit:"Mixed",q:"Which tool can create cover letters?",opts:["Resume.io","Pictory.ai","Grok","Canva"],ans:0},
-  {unit:"Mixed",q:"Which tool can simplify coding concepts?",opts:["ELI5.ai","Canva","Pictory.ai","Resume.io"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is best for creating a digital portfolio video?",opts:["Pictory.ai","Grammarly","Grok","Canva"],ans:0},
-  {unit:"Mixed",q:"Which AI assistant can help with research and summarization?",opts:["Claude","Resume.io","Gama","Canva"],ans:0},
-  {unit:"Mixed",q:"Which tool is useful for blog introductions?",opts:["Copy.ai","Grammarly","Pictory.ai","Resume.io"],ans:0},
-  {unit:"Mixed",q:"Which AI tool helps with tone suggestions?",opts:["Grammarly","Canva","GitHub Copilot","Resume.io"],ans:0},
-  {unit:"Mixed",q:"Which tool helps turn text into a presentation?",opts:["Gama","Grok","Grammarly","Claude"],ans:0},
-  {unit:"Mixed",q:"Which tool is best for organizing notes?",opts:["NotepadAI","Canva","Resume.io","GitHub Copilot"],ans:0},
-  {unit:"Mixed",q:"Which tool is associated with coding support?",opts:["GitHub Copilot","Canva","Resume.io","Pictory.ai"],ans:0},
-  {unit:"Mixed",q:"Which tool can be used for academic branding?",opts:["Canva","ELI5.ai","Claude","Grok"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is best for assignment drafts?",opts:["Copy.ai","Resume.io","Grammarly","Pictory.ai"],ans:0},
-  {unit:"Mixed",q:"Which tool provides smart formatting for resumes?",opts:["Resume.io","Gama","Canva","Copy.ai"],ans:0},
-  {unit:"Mixed",q:"Which tool is useful for explaining classroom algorithms?",opts:["ELI5.ai","Resume.io","Canva","Grammarly"],ans:0},
-  {unit:"Mixed",q:"Which tool is best for creating AI-generated slides?",opts:["Gama","Grok","Grammarly","NotepadAI"],ans:0},
-  {unit:"Mixed",q:"Which tool can help write simple code snippets?",opts:["GitHub Copilot","Resume.io","Canva","Pictory.ai"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is designed for research help?",opts:["Claude","Canva","Resume.io","Pictory.ai"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is useful for portfolio links in resumes?",opts:["Resume.io","Grammarly","Grok","Canva"],ans:0},
-  {unit:"Mixed",q:"Which tool converts scripts into videos?",opts:["Pictory.ai","Resume.io","Canva","Claude"],ans:0},
-  {unit:"Mixed",q:"Which tool helps generate project descriptions?",opts:["Copy.ai","Grammarly","Grok","Gama"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is used for summarization?",opts:["Claude","Resume.io","Canva","Pictory.ai"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is ideal for creating banners?",opts:["Canva","Grok","Resume.io","GitHub Copilot"],ans:0},
-  {unit:"Mixed",q:"Which tool is best for creating reports from text automatically?",opts:["Gama","Grammarly","Grok","Pictory.ai"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is useful for checking sentence clarity?",opts:["Grammarly","Canva","Resume.io","GitHub Copilot"],ans:0},
-  {unit:"Mixed",q:"Which AI tool is used for workflow management?",opts:["Claude","Pictory.ai","AI tools in general","Resume.io"],ans:2},
-  {unit:"Mixed",q:"Which tool is best for AI-based note generation?",opts:["NotepadAI","Canva","Resume.io","Pictory.ai"],ans:0},
-  {unit:"Mixed",q:"Which tool is useful for turning written content into visual slides?",opts:["Gama","Grok","GitHub Copilot","Grammarly"],ans:0},
-  {unit:"Mixed",q:"The overall aim of this course is to:",opts:["Replace human effort completely","Use AI tools for productivity and professional work","Focus only on coding","Learn only one AI tool"],ans:1},
+const ALL_Q=[
+  {u:"Unit I",q:"What is the main purpose of AI tools in academics?",o:["Increase manual work","Reduce productivity","Enhance learning and automation","Replace textbooks completely"],a:2},
+  {u:"Unit I",q:"Which AI tool is designed for writing, summarizing, and organizing content?",o:["Canva","Grammarly","NotepadAI","Resume.io"],a:2},
+  {u:"Unit I",q:"Grammarly is mainly used for:",o:["Coding","Grammar and spelling correction","Video creation","Resume building"],a:1},
+  {u:"Unit I",q:"Grok is useful for:",o:["Designing posters","Real-time explanations and quick answers","Creating resumes","Editing videos"],a:1},
+  {u:"Unit I",q:"Which tool helps improve tone and clarity in writing?",o:["Grammarly","Pictory.ai","Gama","Resume.io"],a:0},
+  {u:"Unit I",q:"AI tools help students mainly by:",o:["Making work slower","Increasing complexity","Saving time and effort","Replacing teachers"],a:2},
+  {u:"Unit I",q:"NotepadAI is best for:",o:["Making presentations","Summarizing notes","Coding","Video generation"],a:1},
+  {u:"Unit I",q:"Grammarly can suggest improvements in:",o:["Tone","Clarity","Grammar","All of these"],a:3},
+  {u:"Unit I",q:"Grok is an example of:",o:["AI assistant","Video editor","Coding IDE","Graphic tool"],a:0},
+  {u:"Unit I",q:"Which of the following is a benefit of AI tools?",o:["More repetitive work","Better productivity","More confusion","Less organization"],a:1},
+  {u:"Unit I",q:"AI tools can be used in:",o:["Academics only","Industry only","Both academics and industry","Entertainment only"],a:2},
+  {u:"Unit I",q:"Which tool is most useful for proofreading assignments?",o:["Canva","Grammarly","Claude","Pictory.ai"],a:1},
+  {u:"Unit I",q:"What kind of content can NotepadAI generate?",o:["Summaries","Notes","Organized content","All of these"],a:3},
+  {u:"Unit I",q:"Grok can simplify:",o:["Difficult topics","Easy topics","Only coding","Only grammar"],a:0},
+  {u:"Unit I",q:"Which tool gives real-time grammar correction?",o:["Copy.ai","Grammarly","Resume.io","Pictory.ai"],a:1},
+  {u:"Unit I",q:"AI-based tools are useful for:",o:["Automation","Productivity","Learning","All of these"],a:3},
+  {u:"Unit I",q:"The main feature of NotepadAI is:",o:["Resume generation","Content organization","Video editing","Poster design"],a:1},
+  {u:"Unit I",q:"Which AI tool is ideal for improving academic reports?",o:["Grammarly","Pictory.ai","Resume.io","Canva"],a:0},
+  {u:"Unit I",q:"AI tools reduce:",o:["Efficiency","Accuracy","Manual effort","Creativity"],a:2},
+  {u:"Unit I",q:"Grok helps in:",o:["Complex coding only","Quick explanations","Video creation","Resume building"],a:1},
+  {u:"Unit II",q:"Canva is mainly used for:",o:["Coding","Visual design","Database management","Cybersecurity"],a:1},
+  {u:"Unit II",q:"Which Canva feature helps generate written content?",o:["Magic Write","Smart Paint","AI Draw","Code Assist"],a:0},
+  {u:"Unit II",q:"Canva can be used to create:",o:["Posters","Infographics","Presentations","All of these"],a:3},
+  {u:"Unit II",q:"Copy.ai is useful for:",o:["Coding","Blog generation","Resume design","Video editing"],a:1},
+  {u:"Unit II",q:"AI-assisted creativity mainly improves:",o:["Communication through visuals","Coding","Networking","Security"],a:0},
+  {u:"Unit II",q:"Which tool is best for creating resumes visually?",o:["Canva","Grammarly","Grok","ELI5.ai"],a:0},
+  {u:"Unit II",q:"Copy.ai can generate:",o:["Blog introductions","Assignment drafts","Project descriptions","All of these"],a:3},
+  {u:"Unit II",q:"Canva templates are useful because they:",o:["Save time","Improve design quality","Are easy to customize","All of these"],a:3},
+  {u:"Unit II",q:"Which tool is used for classroom presentations?",o:["Canva","GitHub Copilot","Resume.io","Pictory.ai"],a:0},
+  {u:"Unit II",q:"Copy.ai mainly focuses on:",o:["Content generation","Coding","Grammar checking","Video conversion"],a:0},
+  {u:"Unit II",q:"Canva helps in:",o:["Branding","Poster design","Resume creation","All of these"],a:3},
+  {u:"Unit II",q:"Which AI tool can generate assignment drafts?",o:["Canva","Copy.ai","Grammarly","Resume.io"],a:1},
+  {u:"Unit II",q:"Canva's AI templates help users by:",o:["Increasing work","Reducing creativity","Making design faster","Adding errors"],a:2},
+  {u:"Unit II",q:"Which of these is not mainly a visual design tool?",o:["Canva","Copy.ai","Grammarly","Magic Write"],a:2},
+  {u:"Unit II",q:"AI visuals are important because they:",o:["Improve communication","Make content attractive","Increase understanding","All of these"],a:3},
+  {u:"Unit III",q:"Pictory.ai is used for:",o:["Resume making","Converting text into videos","Coding","Grammar correction"],a:1},
+  {u:"Unit III",q:"GitHub Copilot is mainly used for:",o:["Code suggestions","Video editing","Poster design","Resume formatting"],a:0},
+  {u:"Unit III",q:"ELI5.ai stands for:",o:["Explain Logic in 5 steps","ExplainLikeImFive","Explain Learning in Five","Easy Logic Interface 5"],a:1},
+  {u:"Unit III",q:"Claude is useful for:",o:["Summarization","Coding support","Research help","All of these"],a:3},
+  {u:"Unit III",q:"Which tool converts blog posts into videos?",o:["Canva","Pictory.ai","Grok","Resume.io"],a:1},
+  {u:"Unit III",q:"GitHub Copilot works inside:",o:["Web browser only","IDEs like VS Code","Mobile apps only","Canva"],a:1},
+  {u:"Unit III",q:"ELI5.ai is useful because it:",o:["Makes coding difficult","Simplifies complex topics","Designs posters","Creates resumes"],a:1},
+  {u:"Unit III",q:"Claude can help in:",o:["Coding","Writing","Research","All of these"],a:3},
+  {u:"Unit III",q:"GitHub Copilot provides:",o:["Code explanations","Code suggestions","Auto-completion","All of these"],a:3},
+  {u:"Unit III",q:"Pictory.ai is helpful for:",o:["Digital portfolios","Presentations","Video content","All of these"],a:3},
+  {u:"Unit III",q:"Which tool is best for explaining algorithms simply?",o:["ELI5.ai","Canva","Resume.io","Grammarly"],a:0},
+  {u:"Unit III",q:"Claude is an example of:",o:["AI assistant","Video maker","Design software","Resume editor"],a:0},
+  {u:"Unit III",q:"Which tool is most useful for fixing code errors?",o:["GitHub Copilot","Canva","Resume.io","Copy.ai"],a:0},
+  {u:"Unit III",q:"Pictory.ai mainly supports:",o:["Text-to-video conversion","Resume generation","Poster making","Grammar correction"],a:0},
+  {u:"Unit III",q:"ELI5.ai helps students by:",o:["Simplifying theoretical concepts","Making diagrams","Editing resumes","Writing code automatically"],a:0},
+  {u:"Unit IV",q:"Resume.io is mainly used for:",o:["Resume creation","Coding","Grammar correction","Poster making"],a:0},
+  {u:"Unit IV",q:"Gama is used for:",o:["AI-powered presentations","Database design","Video editing","Coding"],a:0},
+  {u:"Unit IV",q:"Resume.io can generate:",o:["Cover letters","Resumes","Portfolios","All of these"],a:3},
+  {u:"Unit IV",q:"Gama converts text into:",o:["Spreadsheets","Slides and reports","Videos","Code"],a:1},
+  {u:"Unit IV",q:"Which tool is best for building a professional portfolio?",o:["Resume.io","Grammarly","Grok","ELI5.ai"],a:0},
+  {u:"Unit IV",q:"Gama helps users create:",o:["Webpages","Presentations","Reports","All of these"],a:3},
+  {u:"Unit IV",q:"Resume.io provides:",o:["Smart formatting","AI-generated resumes","Cover letters","All of these"],a:3},
+  {u:"Unit IV",q:"Which tool is useful for making visually appealing slides?",o:["Gama","GitHub Copilot","Grammarly","Pictory.ai"],a:0},
+  {u:"Unit IV",q:"Resume.io helps improve:",o:["Career readiness","Presentation skills","Coding ability","Video editing"],a:0},
+  {u:"Unit IV",q:"Gama is best described as:",o:["AI-powered presentation tool","Grammar tool","Coding assistant","Note-taking app"],a:0},
+  {u:"CO",q:"CO1 is related to:",o:["Productivity and academic use of AI","Resume design","Coding only","Video generation"],a:0},
+  {u:"CO",q:"CO2 is related to:",o:["AI-based content and visual design","Coding only","Database systems","Networking"],a:0},
+  {u:"CO",q:"CO3 focuses on:",o:["Task automation and code assistance","Resume making only","Grammar only","Poster design only"],a:0},
+  {u:"CO",q:"CO4 is mainly about:",o:["Productivity workflows and resumes","Coding only","Grammar correction","Video creation"],a:0},
+  {u:"CO",q:"Which practical exercise uses Grammarly?",o:["Design a poster","Proofread an assignment","Convert blog to video","Make a resume"],a:1},
+  {u:"CO",q:"Which tool is used to generate a study plan?",o:["NotepadAI","Gama","Canva","Pictory.ai"],a:0},
+  {u:"CO",q:"Which practical involves creating a poster?",o:["Week 4","Week 2","Week 7","Week 10"],a:0},
+  {u:"CO",q:"Which week involves using GitHub Copilot?",o:["Week 3","Week 7","Week 10","Week 11"],a:1},
+  {u:"CO",q:"Which week focuses on AI-generated resumes?",o:["Week 10","Week 4","Week 2","Week 1"],a:0},
+  {u:"CO",q:"Which week involves using Gama?",o:["Week 6","Week 11","Week 4","Week 8"],a:1},
+  {u:"Mixed",q:"Which tool is best for quick explanations?",o:["Grok","Canva","Resume.io","Pictory.ai"],a:0},
+  {u:"Mixed",q:"Which tool is ideal for code auto-completion?",o:["GitHub Copilot","Copy.ai","Canva","Gama"],a:0},
+  {u:"Mixed",q:"Which AI tool is useful for making infographics?",o:["Canva","Grammarly","Claude","Resume.io"],a:0},
+  {u:"Mixed",q:"Which tool can create cover letters?",o:["Resume.io","Pictory.ai","Grok","Canva"],a:0},
+  {u:"Mixed",q:"Which tool can simplify coding concepts?",o:["ELI5.ai","Canva","Pictory.ai","Resume.io"],a:0},
+  {u:"Mixed",q:"Which AI tool is best for creating a digital portfolio video?",o:["Pictory.ai","Grammarly","Grok","Canva"],a:0},
+  {u:"Mixed",q:"Which AI assistant can help with research and summarization?",o:["Claude","Resume.io","Gama","Canva"],a:0},
+  {u:"Mixed",q:"Which tool is useful for blog introductions?",o:["Copy.ai","Grammarly","Pictory.ai","Resume.io"],a:0},
+  {u:"Mixed",q:"Which AI tool helps with tone suggestions?",o:["Grammarly","Canva","GitHub Copilot","Resume.io"],a:0},
+  {u:"Mixed",q:"Which tool helps turn text into a presentation?",o:["Gama","Grok","Grammarly","Claude"],a:0},
+  {u:"Mixed",q:"Which tool is best for organizing notes?",o:["NotepadAI","Canva","Resume.io","GitHub Copilot"],a:0},
+  {u:"Mixed",q:"Which tool is associated with coding support?",o:["GitHub Copilot","Canva","Resume.io","Pictory.ai"],a:0},
+  {u:"Mixed",q:"Which tool can be used for academic branding?",o:["Canva","ELI5.ai","Claude","Grok"],a:0},
+  {u:"Mixed",q:"Which AI tool is best for assignment drafts?",o:["Copy.ai","Resume.io","Grammarly","Pictory.ai"],a:0},
+  {u:"Mixed",q:"Which tool provides smart formatting for resumes?",o:["Resume.io","Gama","Canva","Copy.ai"],a:0},
+  {u:"Mixed",q:"Which tool is useful for explaining classroom algorithms?",o:["ELI5.ai","Resume.io","Canva","Grammarly"],a:0},
+  {u:"Mixed",q:"Which tool is best for creating AI-generated slides?",o:["Gama","Grok","Grammarly","NotepadAI"],a:0},
+  {u:"Mixed",q:"Which tool can help write simple code snippets?",o:["GitHub Copilot","Resume.io","Canva","Pictory.ai"],a:0},
+  {u:"Mixed",q:"Which AI tool is designed for research help?",o:["Claude","Canva","Resume.io","Pictory.ai"],a:0},
+  {u:"Mixed",q:"Which AI tool is useful for portfolio links in resumes?",o:["Resume.io","Grammarly","Grok","Canva"],a:0},
+  {u:"Mixed",q:"Which tool converts scripts into videos?",o:["Pictory.ai","Resume.io","Canva","Claude"],a:0},
+  {u:"Mixed",q:"Which tool helps generate project descriptions?",o:["Copy.ai","Grammarly","Grok","Gama"],a:0},
+  {u:"Mixed",q:"Which AI tool is used for summarization?",o:["Claude","Resume.io","Canva","Pictory.ai"],a:0},
+  {u:"Mixed",q:"Which AI tool is ideal for creating banners?",o:["Canva","Grok","Resume.io","GitHub Copilot"],a:0},
+  {u:"Mixed",q:"Which tool is best for creating reports from text automatically?",o:["Gama","Grammarly","Grok","Pictory.ai"],a:0},
+  {u:"Mixed",q:"Which AI tool is useful for checking sentence clarity?",o:["Grammarly","Canva","Resume.io","GitHub Copilot"],a:0},
+  {u:"Mixed",q:"Which AI tool is used for workflow management?",o:["Claude","Pictory.ai","AI tools in general","Resume.io"],a:2},
+  {u:"Mixed",q:"Which tool is best for AI-based note generation?",o:["NotepadAI","Canva","Resume.io","Pictory.ai"],a:0},
+  {u:"Mixed",q:"Which tool is useful for turning written content into visual slides?",o:["Gama","Grok","GitHub Copilot","Grammarly"],a:0},
+  {u:"Mixed",q:"The overall aim of this course is to:",o:["Replace human effort completely","Use AI tools for productivity and professional work","Focus only on coding","Learn only one AI tool"],a:1},
 ];
 
-let selectedUnit = 'all';
-let currentMode = 'quiz';
-let questions = [];
-let qIndex = 0;
-let score = 0;
-let answered = [];
-let fcIndex = 0;
-let fcFlipped = false;
-let lastMode = 'quiz';
+// STATE
+let S={unit:'all',mode:'quiz',questions:[],qi:0,answers:[],score:0,wrong:0,fcIdx:0,fcFlip:false,sesC:0,sesW:0,sesT:0};
 
-function toggleUnit(el) {
-  document.querySelectorAll('.unit-tag').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  selectedUnit = el.dataset.unit;
-}
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function getQ(){const f=S.unit==='all'?ALL_Q:ALL_Q.filter(q=>q.u===S.unit);return shuffle(f)}
 
-function getFilteredQuestions() {
-  if (selectedUnit === 'all') return shuffle([...ALL_QUESTIONS]);
-  return shuffle(ALL_QUESTIONS.filter(q => q.unit === selectedUnit));
-}
+// SCREENS
+const TITLES={home:'OVERVIEW',quiz:'QUIZ MODE',flash:'FLASHCARDS',result:'RESULTS'};
 
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-function startMode(mode) {
-  currentMode = mode;
-  lastMode = mode;
-  questions = getFilteredQuestions();
-  if (!questions.length) { alert('No questions for that filter!'); return; }
-
-  if (mode === 'quiz') {
-    qIndex = 0; score = 0;
-    answered = new Array(questions.length).fill(null);
-    showScreen('quiz-screen');
-    renderQuestion();
-  } else {
-    fcIndex = 0; fcFlipped = false;
-    showScreen('flash-screen');
-    renderFlash();
-  }
-}
-
-function launchSelected() { startMode(currentMode || 'quiz'); }
-
-function showScreen(id) {
-  ['mode-screen','quiz-screen','flash-screen','result-screen'].forEach(s => {
-    document.getElementById(s).style.display = 'none';
+function navTo(key,el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+  document.getElementById('topbar-title').textContent=TITLES[key]||key.toUpperCase();
+  ['home','quiz','flash','result'].forEach(k=>{
+    const s=document.getElementById('screen-'+k);
+    if(s)s.classList.toggle('active',k===key);
   });
-  document.getElementById(id).style.display = 'block';
+  closeSidebar();
 }
 
-function showModeScreen() { showScreen('mode-screen'); }
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
+
+function selectUnit(el){
+  document.querySelectorAll('.unit-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  S.unit=el.dataset.unit;
+}
+
+function setMode(m){
+  S.mode=m;
+  document.getElementById('btn-quiz').classList.toggle('active',m==='quiz');
+  document.getElementById('btn-flash').classList.toggle('active',m==='flash');
+}
+
+function startCurrent(){startMode(S.mode)}
+
+function startMode(mode){
+  S.mode=mode;S.questions=getQ();
+  if(!S.questions.length)return;
+  if(mode==='quiz'){
+    S.qi=0;S.score=0;S.wrong=0;S.answers=new Array(S.questions.length).fill(null);
+    navTo('quiz',document.querySelector('[data-screen=quiz]'));
+    renderQ();
+  }else{
+    S.fcIdx=0;S.fcFlip=false;
+    navTo('flash',document.querySelector('[data-screen=flash]'));
+    renderFC();
+  }
+}
+
+function quickStart(unit){
+  S.unit=unit;
+  document.querySelectorAll('.unit-btn').forEach(b=>b.classList.toggle('active',b.dataset.unit===unit));
+  startMode('quiz');
+}
 
 // QUIZ
-function renderQuestion() {
-  const q = questions[qIndex];
-  const total = questions.length;
-  document.getElementById('pbar').style.width = ((qIndex / total) * 100) + '%';
-  document.getElementById('q-counter').textContent = `Q ${qIndex + 1} / ${total}`;
-  document.getElementById('score-badge').textContent = `Score: ${score}`;
-  document.getElementById('q-unit').textContent = q.unit;
-  document.getElementById('q-text').textContent = q.q;
+function renderQ(){
+  const q=S.questions[S.qi],tot=S.questions.length,idx=S.qi;
+  document.getElementById('qi-num').textContent=`${idx+1} / ${tot}`;
+  document.getElementById('pbar').style.width=((idx/tot)*100)+'%';
+  document.getElementById('chip-c').textContent=S.score;
+  document.getElementById('chip-w').textContent=S.wrong;
+  document.getElementById('qnum-bg').textContent=String(idx+1).padStart(2,'0');
+  document.getElementById('q-unit').textContent=q.u;
+  document.getElementById('q-text').textContent=q.q;
 
-  const grid = document.getElementById('options-grid');
-  grid.innerHTML = '';
-  const letters = ['A','B','C','D'];
-
-  q.opts.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span>${opt}`;
-    btn.onclick = () => selectAnswer(i);
-    if (answered[qIndex] !== null) {
-      btn.disabled = true;
-      if (i === q.ans) btn.classList.add('correct');
-      else if (i === answered[qIndex]) btn.classList.add('wrong');
+  const list=document.getElementById('options-list');
+  list.innerHTML='';
+  ['A','B','C','D'].forEach((L,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="opt-letter">${L}</span><span class="opt-text">${q.o[i]}</span>`;
+    b.onclick=()=>selectA(i);
+    if(S.answers[idx]!==null){
+      b.disabled=true;
+      if(i===q.a)b.classList.add('correct');
+      else if(i===S.answers[idx])b.classList.add('wrong');
     }
-    grid.appendChild(btn);
+    list.appendChild(b);
   });
 
-  const fb = document.getElementById('feedback-box');
-  if (answered[qIndex] !== null) {
-    const correct = answered[qIndex] === q.ans;
-    fb.className = 'feedback-box show' + (correct ? '' : ' wrong-fb');
-    fb.textContent = correct
-      ? `✅ Correct! The answer is: ${q.opts[q.ans]}`
-      : `❌ Wrong. The correct answer is: ${q.opts[q.ans]}`;
-  } else {
-    fb.className = 'feedback-box';
-  }
+  const fb=document.getElementById('feedback');
+  if(S.answers[idx]!==null){
+    const ok=S.answers[idx]===q.a;
+    fb.className='feedback show '+(ok?'correct':'wrong');
+    fb.textContent=ok?`✅ Correct! "${q.o[q.a]}"`:`❌ Wrong. Answer: "${q.o[q.a]}"`;
+  }else{fb.className='feedback'}
 
-  document.getElementById('prev-btn').disabled = qIndex === 0;
-  document.getElementById('next-btn').textContent = qIndex === questions.length - 1 ? 'Finish ✓' : 'Next →';
+  const dots=document.getElementById('q-dots');
+  dots.innerHTML='';
+  S.questions.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='q-dot';
+    if(i===idx)d.classList.add('current');
+    else if(S.answers[i]!==null)d.classList.add(S.answers[i]===S.questions[i].a?'ans-c':'ans-w');
+    d.onclick=()=>{S.qi=i;renderQ()};
+    dots.appendChild(d);
+  });
+
+  document.getElementById('prev-btn').disabled=idx===0;
+  document.getElementById('next-btn').textContent=idx===tot-1?'Finish ✓':'Next →';
 }
 
-function selectAnswer(i) {
-  if (answered[qIndex] !== null) return;
-  answered[qIndex] = i;
-  const q = questions[qIndex];
-  if (i === q.ans) score++;
-  renderQuestion();
+function selectA(i){
+  if(S.answers[S.qi]!==null)return;
+  const q=S.questions[S.qi];S.answers[S.qi]=i;
+  const ok=i===q.a;
+  if(ok)S.score++;else S.wrong++;
+  S.sesT++;if(ok)S.sesC++;else S.sesW++;
+  document.getElementById('sb-c').textContent=S.sesC;
+  document.getElementById('sb-w').textContent=S.sesW;
+  document.getElementById('sb-t').textContent=S.sesT;
+  renderQ();
 }
 
-function nextQ() {
-  if (qIndex < questions.length - 1) { qIndex++; renderQuestion(); }
-  else showResult();
+function nextQ(){
+  if(S.qi<S.questions.length-1){S.qi++;renderQ();}else showResult();
+}
+function prevQ(){if(S.qi>0){S.qi--;renderQ();}}
+
+// RESULT
+function showResult(){
+  const tot=S.questions.length,pct=Math.round((S.score/tot)*100);
+  document.getElementById('ring-pct').textContent=pct+'%';
+  document.getElementById('res-c').textContent=S.score;
+  document.getElementById('res-w').textContent=S.wrong;
+  document.getElementById('res-t').textContent=tot;
+  const msgs=pct>=90?['EXCELLENT!','Outstanding! Exam-ready. 🔥']:pct>=75?['GOOD JOB!','Solid. Review weak spots.']:pct>=55?['KEEP GOING','A bit more practice!']:['STUDY MORE','Review material and retry.'];
+  document.getElementById('res-title').textContent=msgs[0];
+  document.getElementById('res-sub').textContent=msgs[1];
+  document.getElementById('result-nav').style.display='flex';
+  navTo('result',document.querySelector('[data-screen=result]'));
+  setTimeout(()=>{
+    const circ=351.9,off=circ-(pct/100)*circ;
+    document.getElementById('ring-circle').style.strokeDashoffset=off;
+  },120);
 }
 
-function prevQ() {
-  if (qIndex > 0) { qIndex--; renderQuestion(); }
-}
-
-function showResult() {
-  showScreen('result-screen');
-  const total = questions.length;
-  const pct = Math.round((score / total) * 100);
-  const wrong = total - score;
-
-  document.getElementById('final-pct').textContent = pct + '%';
-  document.getElementById('score-ring').style.setProperty('--pct', pct + '%');
-  document.getElementById('r-correct').textContent = score;
-  document.getElementById('r-wrong').textContent = wrong;
-
-  let title, sub;
-  if (pct >= 90) { title = '🔥 Excellent!'; sub = "You're fully prepared. Crush that exam!"; }
-  else if (pct >= 70) { title = '👍 Good Job!'; sub = 'Almost there. Review your wrong answers.'; }
-  else if (pct >= 50) { title = '📚 Keep Studying'; sub = 'Practice a bit more and you\'ll get it!'; }
-  else { title = '💪 Don\'t Give Up'; sub = 'Review the material and try again!'; }
-
-  document.getElementById('result-title').textContent = title;
-  document.getElementById('result-sub').textContent = sub;
-}
-
-function restartQuiz() {
-  qIndex = 0; score = 0;
-  questions = getFilteredQuestions();
-  answered = new Array(questions.length).fill(null);
-  showScreen('quiz-screen');
-  renderQuestion();
+function restartQuiz(){
+  S.questions=getQ();S.qi=0;S.score=0;S.wrong=0;S.answers=new Array(S.questions.length).fill(null);
+  navTo('quiz',document.querySelector('[data-screen=quiz]'));renderQ();
 }
 
 // FLASHCARD
-function renderFlash() {
-  const q = questions[fcIndex];
-  const fc = document.getElementById('flashcard');
-  fc.classList.remove('flipped');
-  fcFlipped = false;
-  document.getElementById('fc-counter').textContent = `Card ${fcIndex + 1} / ${questions.length}`;
-  document.getElementById('fc-unit').textContent = q.unit;
-  document.getElementById('fc-q').textContent = q.q;
-  document.getElementById('fc-answer').textContent = q.opts[q.ans];
-  const letters = ['a)','b)','c)','d)'];
-  document.getElementById('fc-opts').innerHTML = q.opts.map((o,i) =>
-    `<span style="color:${i===q.ans?'var(--correct)':'var(--muted)'};font-weight:${i===q.ans?700:400}">${letters[i]} ${o}</span>`
-  ).join('<br>');
+function renderFC(){
+  const q=S.questions[S.fcIdx],tot=S.questions.length;
+  document.getElementById('fc-num').textContent=S.fcIdx+1;
+  document.getElementById('fc-total').textContent=tot;
+  document.getElementById('fc-unit').textContent=q.u;
+  document.getElementById('fc-q').textContent=q.q;
+  document.getElementById('fc-answer').textContent=q.o[q.a];
+  document.getElementById('fc-pbar').style.width=((S.fcIdx/tot)*100)+'%';
+  const L=['A','B','C','D'];
+  document.getElementById('fc-opts').innerHTML=q.o.map((o,i)=>
+    `<div class="fc-opt ${i===q.a?'is-answer':''}"><span class="fc-letters">${L[i]}.</span>${o}</div>`
+  ).join('');
+  const fc=document.getElementById('flashcard');
+  fc.classList.remove('flipped');S.fcFlip=false;
 }
 
-function flipCard() {
-  const fc = document.getElementById('flashcard');
-  if (!fcFlipped) { fc.classList.add('flipped'); fcFlipped = true; }
-  else { fc.classList.remove('flipped'); fcFlipped = false; }
+function flipCard(){
+  S.fcFlip=!S.fcFlip;
+  document.getElementById('flashcard').classList.toggle('flipped',S.fcFlip);
 }
 
-function fcNav(dir) {
-  fcIndex = Math.max(0, Math.min(questions.length - 1, fcIndex + dir));
-  renderFlash();
+function fcNav(d){
+  S.fcIdx=Math.max(0,Math.min(S.questions.length-1,S.fcIdx+d));
+  renderFC();
 }
+
+// Init
+S.questions=getQ();
 </script>
 </body>
 </html>
